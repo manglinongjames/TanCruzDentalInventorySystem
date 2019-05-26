@@ -1,0 +1,21 @@
+﻿@model TanCruzDentalInventorySystem.ViewModel.LoginCredentialsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Account"))
+{
+    <div class="form-group">
+        @Html.LabelFor(login => login.UserName)
+        @Html.TextBoxFor(login => login.UserName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(login => login.Password)
+        @Html.TextBoxFor(login => login.Password, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+}
+
