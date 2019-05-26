@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
 using TanCruzDentalInventorySystem.ViewModel;
 
@@ -14,7 +13,6 @@ namespace TanCruzDentalInventorySystem.Controllers
             _accountService = accountService;
         }
 
-        // GET: Login
         public ActionResult Index()
         {
             return View();
@@ -23,19 +21,18 @@ namespace TanCruzDentalInventorySystem.Controllers
         [HttpPost]
         public ActionResult Login(LoginCredentialsViewModel loginInfo)
         {
-            // TODO: return the correct view for successful/failed login
-            bool successful = false;
+            UserProfileViewModel userProfile = null;
+
             try
             {
-                successful = _accountService.Login(loginInfo);
-
+                userProfile = _accountService.Login(loginInfo);
             }
-            catch (Exception ex)
+            catch
             {
-                successful = false;
+                
             }
             // Instead of creating the view, redirect to another controller on login success/fail.
-            return Content($"Login result: {successful}");
+            return View();
         }
     }
 }

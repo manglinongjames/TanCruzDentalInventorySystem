@@ -1,4 +1,5 @@
-﻿using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
+﻿using AutoMapper;
+using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
 using TanCruzDentalInventorySystem.Repository.DataServiceInterface;
 using TanCruzDentalInventorySystem.ViewModel;
 
@@ -15,10 +16,11 @@ namespace TanCruzDentalInventorySystem.BusinessService
             _unitOfWork = unitOfWork;
         }
 
-        public bool Login(LoginCredentialsViewModel loginInfo)
+        public UserProfileViewModel Login(LoginCredentialsViewModel loginInfo)
         {
             _accountRepository.UnitOfWork = _unitOfWork;
-            return _accountRepository.Login(loginInfo.UserName, loginInfo.Password);
+
+            return Mapper.Map<UserProfileViewModel>(_accountRepository.Login(loginInfo.Email, loginInfo.Password));
 
             //_unitOfWork.Begin();
             //try

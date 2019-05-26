@@ -4,6 +4,6 @@ namespace TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface
 {
     public interface IAccountService
     {
-        bool Login(LoginCredentialsViewModel loginInfo);
+        UserProfileViewModel Login(LoginCredentialsViewModel loginInfo);
     }
 }

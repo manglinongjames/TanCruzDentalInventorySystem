@@ -1,8 +1,10 @@
-﻿namespace TanCruzDentalInventorySystem.Repository.DataServiceInterface
+﻿using TanCruzDentalInventorySystem.Models;
+
+namespace TanCruzDentalInventorySystem.Repository.DataServiceInterface
 {
     public interface IAccountRepository
     {
         IUnitOfWork UnitOfWork { get; set; }
-        bool Login(string userName, string passWord);
+        UserProfile Login(string userName, string passWord);
     }
 }

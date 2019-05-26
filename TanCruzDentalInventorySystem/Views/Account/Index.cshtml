@@ -1,21 +1,51 @@
 ﻿@model TanCruzDentalInventorySystem.ViewModel.LoginCredentialsViewModel
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "";
+    Layout = null;
 }
 
-<h2>Login</h2>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Francis Daray">
+    <title>@ViewBag.Title</title>
 
-@using (Html.BeginForm("Login", "Account"))
-{
-    <div class="form-group">
-        @Html.LabelFor(login => login.UserName)
-        @Html.TextBoxFor(login => login.UserName, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(login => login.Password)
-        @Html.TextBoxFor(login => login.Password, new { @class = "form-control" })
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-}
+    <!-- Bootstrap core CSS -->
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/modernizr")
+    @Styles.Render("~/Content/css/login")
 
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+    @using (Html.BeginForm("Login", "Account", new { @class = "form-signin" }))
+    {
+        @*<form class="form-signin">*@
+        <img class="mb-4" src="..\..\Content\img\CompanyLogo.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div class="form-group">
+            @Html.LabelFor(login => login.Email, new { @class = "sr-only" })
+            @Html.TextBoxFor(login => login.Email, new { @class = "form-control", @type = "email" })
+            @*<label for="Email" class="sr-only">Email address</label>
+                <input type="email" id="Email" class="form-control" placeholder="Email address" required autofocus>*@
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(login => login.Password, new { @class = "sr-only" })
+            @Html.TextBoxFor(login => login.Password, new { @class = "form-control", @type = "password", @required = "true" })
+            @*<label for="Password" class="sr-only">Password</label>
+                <input type="password" id="Password" class="form-control" placeholder="Password" required>*@
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2019 Tan-Cruz Dental Inventory System</p>
+        @*</form>*@
+    }
+</body>
+</html>

@@ -9,13 +9,14 @@ namespace TanCruzDentalInventorySystem.Repository
     public class AccountRepository : IAccountRepository
     {
         private const string GET_USERPROFILE = "[dbo].InSys_GetUserProfile";
+        private const string GET_USERGROUP = "[dbo].InSys_GetUserGroup";
 
         public IUnitOfWork UnitOfWork { get; set; }
 
-        public bool Login(string userName, string password)
+        public UserProfile Login(string email, string password)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@USER_NAME", userName, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameters.Add("@EMAIL", email, System.Data.DbType.String, System.Data.ParameterDirection.Input);
 
             var userProfile = UnitOfWork.Connection.QuerySingleOrDefault<UserProfile>(
                 sql: GET_USERPROFILE,
@@ -24,9 +25,20 @@ namespace TanCruzDentalInventorySystem.Repository
                 commandType: System.Data.CommandType.StoredProcedure);
 
             if (userProfile == null)
-                return false;
+                return null;
 
-            return new PowerPasswordHasher(Convert.FromBase64String(userProfile.Password)).Verify(password);
+            var userGroup = UnitOfWork.Connection.QuerySingleOrDefault<UserGroup>(
+                sql: GET_USERGROUP,
+                param: parameters,
+                transaction: UnitOfWork.Transaction,
+                commandType: System.Data.CommandType.StoredProcedure);
+
+            userProfile.UserGroup = userGroup;
+
+            if (new PowerPasswordHasher(Convert.FromBase64String(userProfile.Password)).Verify(password))
+                return userProfile;
+
+            return null;
         }
     }
 
