@@ -32,7 +32,7 @@ namespace TanCruzDentalInventorySystem.Controllers
                 
             }
             // Instead of creating the view, redirect to another controller on login success/fail.
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
