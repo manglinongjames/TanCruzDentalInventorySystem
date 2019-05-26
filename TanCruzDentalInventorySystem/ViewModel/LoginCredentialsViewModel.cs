@@ -13,7 +13,7 @@ namespace TanCruzDentalInventorySystem.ViewModel
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(100)]
         public string Password { get; set; }
     }
 }

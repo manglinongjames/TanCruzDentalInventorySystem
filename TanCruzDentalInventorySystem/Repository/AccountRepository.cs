@@ -23,6 +23,9 @@ namespace TanCruzDentalInventorySystem.Repository
                 transaction: UnitOfWork.Transaction,
                 commandType: System.Data.CommandType.StoredProcedure);
 
+            if (userProfile == null)
+                return false;
+
             return new PowerPasswordHasher(Convert.FromBase64String(userProfile.Password)).Verify(password);
         }
     }
