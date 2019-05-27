@@ -21,3 +21,12 @@ textarea {
     width: 40px;
     height: 40px
 }
+
+.homeImage {
+    background-size: cover;
+    height: 120px;
+}
+
+.indexItemStatusEditBtn {
+     margin-right:10px;
+}

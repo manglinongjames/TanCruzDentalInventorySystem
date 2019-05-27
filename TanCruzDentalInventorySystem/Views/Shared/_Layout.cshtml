@@ -22,13 +22,13 @@
                     @Html.ActionLink("Lists", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Sales", "Login", "Home", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink("Sales", "Index", "Account", new { area = "" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Purchases", "Login", "Home", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink("Purchases", "Index", "Account", new { area = "" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Reports", "Login", "Home", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink("Reports", "Index", "Account", new { area = "" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item dropdown">
                     @Html.ActionLink("Admin", "Login", "Home", new { area = "" }, new { @id = "navBarMainAdminDD", @class = "nav-link", data_toggle = "dropdown", aria_haspopup = "true", aria_expanded = "false" })
@@ -48,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Tan Cruz Dental Inventory System</p>
         </footer>
     </div>
 
