@@ -42,7 +42,7 @@ namespace TanCruzDentalInventorySystem.Repository
         }
     }
 
-    internal sealed class PowerPasswordHasher
+    public sealed class PowerPasswordHasher
     {
         const int SaltSize = 16, HashSize = 20, HashIter = 10000;
         readonly byte[] _salt, _hash;

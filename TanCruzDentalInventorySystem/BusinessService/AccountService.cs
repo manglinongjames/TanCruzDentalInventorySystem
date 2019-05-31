@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
+﻿using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
 using TanCruzDentalInventorySystem.Repository.DataServiceInterface;
 using TanCruzDentalInventorySystem.ViewModel;
 
@@ -19,8 +18,8 @@ namespace TanCruzDentalInventorySystem.BusinessService
         public UserProfileViewModel Login(LoginCredentialsViewModel loginInfo)
         {
             _accountRepository.UnitOfWork = _unitOfWork;
-
-            return Mapper.Map<UserProfileViewModel>(_accountRepository.Login(loginInfo.Email, loginInfo.Password));
+            return null;
+//            return Mapper.Map<UserProfileViewModel>(_accountRepository.Login(loginInfo.Email, loginInfo.Password));
 
             //_unitOfWork.Begin();
             //try

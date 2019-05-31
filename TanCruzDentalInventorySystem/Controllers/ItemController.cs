@@ -5,7 +5,7 @@ namespace TanCruzDentalInventorySystem.Controllers
     public class ItemController : Controller
     {
         // GET: Item
-        public ActionResult ItemHome()
+        public ActionResult Index()
         {
             return View();
         }
