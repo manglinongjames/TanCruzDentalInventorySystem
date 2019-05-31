@@ -17,6 +17,10 @@ textarea {
 
 /* Set the image icon on Navbar*/
 
+.navbar {
+    margin-bottom:20px;
+}
+
 .navBarImageLogo {
     width: 40px;
     height: 40px

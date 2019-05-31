@@ -320,10 +320,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Item\ItemHome.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Item\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
