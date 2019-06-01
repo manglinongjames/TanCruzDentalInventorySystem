@@ -1,9 +1,9 @@
 ﻿using IdentityManagement.Entities;
+using IdentityManagement.Mvc;
 using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
 using TanCruzDentalInventorySystem.ViewModel;
@@ -11,43 +11,14 @@ using TanCruzDentalInventorySystem.ViewModel;
 namespace TanCruzDentalInventorySystem.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseIdentityController
     {
         private readonly IAccountService _accountService;
-
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
 
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
-
-
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -106,7 +77,7 @@ namespace TanCruzDentalInventorySystem.Controllers
         public ActionResult Logout()
         {
             SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Login", "Account");
         }
     }
 }
