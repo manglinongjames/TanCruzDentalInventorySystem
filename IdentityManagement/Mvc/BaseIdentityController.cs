@@ -9,7 +9,7 @@ namespace IdentityManagement.Mvc
         protected ApplicationSignInManager _signInManager;
         protected ApplicationUserManager _userManager;
 
-        public BaseIdentityController() { }
+        protected BaseIdentityController() { }
 
 
         protected ApplicationSignInManager SignInManager
