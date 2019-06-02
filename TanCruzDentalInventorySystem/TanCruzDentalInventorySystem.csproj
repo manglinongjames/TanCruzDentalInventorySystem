@@ -341,6 +341,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\ItemHome.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

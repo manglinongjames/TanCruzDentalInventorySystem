@@ -9,5 +9,10 @@ namespace TanCruzDentalInventorySystem.Controllers
         {
             return View();
         }
+
+        public ActionResult ItemHome()
+        {
+            return View();
+        }
     }
 }
