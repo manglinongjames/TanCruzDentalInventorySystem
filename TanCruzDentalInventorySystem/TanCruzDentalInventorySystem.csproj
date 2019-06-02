@@ -257,7 +257,7 @@
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="StaticErrorPages\404.html" />
+    <Content Include="Static\404.html" />
     <Content Include="App_Data\InventorySystem.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -340,7 +340,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Item\Index.cshtml" />
     <Content Include="Views\Item\ItemHome.cshtml" />
   </ItemGroup>
   <ItemGroup />
