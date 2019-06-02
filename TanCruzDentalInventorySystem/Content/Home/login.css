@@ -36,6 +36,10 @@ body {
             z-index: 2;
         }
 
+    .form-signin input {
+        max-width: unset;
+    }
+
     .form-signin input[type="email"] {
         margin-bottom: -1px;
         border-bottom-right-radius: 0;
