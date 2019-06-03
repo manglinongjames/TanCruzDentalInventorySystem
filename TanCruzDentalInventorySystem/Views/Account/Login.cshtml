@@ -25,13 +25,15 @@
         @*<form class="form-signin">*@
         <img class="mb-4" src="..\..\Content\img\CompanyLogo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.TextBoxFor(login => login.UserName, new { @class = "form-control", @placeholder = "Username", @required = "required", @autofocus = "true" })
+            @Html.ValidationMessageFor(login => login.UserName, "", new { @class = "text-danger" })
 
         </div>
         <div class="form-group">
             @Html.TextBoxFor(login => login.Password, new { @class = "form-control", @type = "password", @required = "true", @placeholder = "Password" })
-
+            @Html.ValidationMessageFor(login => login.Password, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
             <div class="checkbox mb-3">
@@ -43,10 +45,10 @@
         </div>
 
         @*<div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>*@
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>*@
         <div class="form-group">
             <input type="submit" value="Sign in" class="signinBtn btn btn-lg btn-outline-warning btn-block" />
         </div>

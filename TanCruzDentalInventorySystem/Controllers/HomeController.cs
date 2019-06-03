@@ -11,12 +11,5 @@ namespace TanCruzDentalInventorySystem.Controllers
 
             return View();
         }
-
-
-        public ActionResult Login()
-        {
-            ViewBag.Title = "Welcome to Tan Cruz Dental Inventory System";
-            return View();
-        }
     }
 }

@@ -36,7 +36,7 @@ namespace TanCruzDentalInventorySystem.Controllers
             {
                 ApplicationUser oUser = await SignInManager.UserManager.FindByNameAsync(loginInfo.UserName);
 
-                if (new PasswordHasher().VerifyHashedPassword(oUser.Password, loginInfo.Password) == PasswordVerificationResult.Success)
+                if (oUser != null && new PasswordHasher().VerifyHashedPassword(oUser.Password, loginInfo.Password) == PasswordVerificationResult.Success)
                 {
                     switch (oUser.UserStatus)
                     {
@@ -57,7 +57,7 @@ namespace TanCruzDentalInventorySystem.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Error: Invalid login details.");
+                    ModelState.AddModelError(string.Empty, "Invalid login details.");
                 }
             }
             return View(loginInfo);
