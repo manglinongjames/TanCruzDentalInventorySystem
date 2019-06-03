@@ -5,15 +5,12 @@ namespace TanCruzDentalInventorySystem.ViewModel
     public class LoginCredentialsViewModel
     {
         [Required]
-        [StringLength(20)]
+        [Display(Name = "UserName")]
         public string UserName { get; set; }
 
-        //[Required]
-        //[StringLength(200)]
-        //public string Email { get; set; }
-
         [Required]
-        [StringLength(100)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
