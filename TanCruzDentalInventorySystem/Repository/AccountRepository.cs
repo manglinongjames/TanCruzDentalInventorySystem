@@ -8,72 +8,22 @@ namespace TanCruzDentalInventorySystem.Repository
 {
     public class AccountRepository : IAccountRepository
     {
-        private const string GET_USERPROFILE = "[dbo].InSys_GetUserProfile";
-        private const string GET_USERGROUP = "[dbo].InSys_GetUserGroup";
+        private const string GET_USERPROFILE = "SELECT USER_NAME UserName, LAST_NAME LastName, PASSWORD Password FROM T1_USERPROFILE WHERE USER_NAME = @USER_NAME;";
 
         public IUnitOfWork UnitOfWork { get; set; }
 
-        public UserProfile Login(string email, string password)
+        public UserProfile Login(string userName, string password)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@EMAIL", email, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameters.Add("@USER_NAME", userName, System.Data.DbType.String, System.Data.ParameterDirection.Input);
 
             var userProfile = UnitOfWork.Connection.QuerySingleOrDefault<UserProfile>(
                 sql: GET_USERPROFILE,
                 param: parameters,
                 transaction: UnitOfWork.Transaction,
-                commandType: System.Data.CommandType.StoredProcedure);
+                commandType: System.Data.CommandType.Text);
 
-            if (userProfile == null)
-                return null;
-
-            var userGroup = UnitOfWork.Connection.QuerySingleOrDefault<UserGroup>(
-                sql: GET_USERGROUP,
-                param: parameters,
-                transaction: UnitOfWork.Transaction,
-                commandType: System.Data.CommandType.StoredProcedure);
-
-            userProfile.UserGroup = userGroup;
-
-            if (new PowerPasswordHasher(Convert.FromBase64String(userProfile.Password)).Verify(password))
-                return userProfile;
-
-            return null;
-        }
-    }
-
-    public sealed class PowerPasswordHasher
-    {
-        const int SaltSize = 16, HashSize = 20, HashIter = 10000;
-        readonly byte[] _salt, _hash;
-
-        public PowerPasswordHasher(string password)
-        {
-            new RNGCryptoServiceProvider().GetBytes(_salt = new byte[SaltSize]);
-            _hash = new Rfc2898DeriveBytes(password, _salt, HashIter).GetBytes(HashSize);
-        }
-
-        public PowerPasswordHasher(byte[] hashBytes)
-        {
-            Array.Copy(hashBytes, 0, _salt = new byte[SaltSize], 0, SaltSize);
-            Array.Copy(hashBytes, SaltSize, _hash = new byte[HashSize], 0, HashSize);
-        }
-
-        public byte[] ToArray()
-        {
-            byte[] hashBytes = new byte[SaltSize + HashSize];
-            Array.Copy(_salt, 0, hashBytes, 0, SaltSize);
-            Array.Copy(_hash, 0, hashBytes, SaltSize, HashSize);
-            return hashBytes;
-        }
-
-        public bool Verify(string password)
-        {
-            byte[] test = new Rfc2898DeriveBytes(password, _salt, HashIter).GetBytes(HashSize);
-            for (int i = 0; i < HashSize; i++)
-                if (test[i] != _hash[i])
-                    return false;
-            return true;
+            return userProfile;
         }
     }
 }

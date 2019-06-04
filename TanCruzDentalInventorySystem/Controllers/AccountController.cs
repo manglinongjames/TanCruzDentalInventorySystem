@@ -3,6 +3,7 @@ using IdentityManagement.Mvc;
 using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
@@ -45,7 +46,8 @@ namespace TanCruzDentalInventorySystem.Controllers
                             break;
                         case EnumUserStatus.Active:
                             SignInManager.SignIn(oUser, loginInfo.RememberMe, false);
-                            return Redirect(returnUrl ?? "/");
+                            break;
+//                            return Redirect(returnUrl ?? "/");
 
                         case EnumUserStatus.Banned:
                             ModelState.AddModelError(string.Empty, "Error: User account has been banned.");
@@ -64,13 +66,13 @@ namespace TanCruzDentalInventorySystem.Controllers
 
             //try
             //{
-            //    userProfile = _accountService.Login(loginInfo);
+            //    var userProfile = _accountService.Login(loginInfo);
             //}
             //catch
             //{
 
             //}
-            //// Instead of creating the view, redirect to another controller on login success/fail.
+            // Instead of creating the view, redirect to another controller on login success/fail.
             //return Redirect(returnUrl);
         }
 
