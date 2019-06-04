@@ -23,7 +23,6 @@ namespace IdentityManagement.Data
                 }
 
                 objRecord = SqlMapper.Query<T>(objConnection, spName, p, commandType: CommandType.StoredProcedure).FirstOrDefault();
-                objConnection.Close();
             }
             return objRecord;
         }
@@ -41,7 +40,6 @@ namespace IdentityManagement.Data
                 }
 
                 recordList = SqlMapper.Query<T>(objConnection, spName, p, commandType: CommandType.StoredProcedure).ToList();
-                objConnection.Close();
             }
             return recordList;
         }
@@ -65,7 +63,6 @@ namespace IdentityManagement.Data
                         intRecord = Convert.ToInt32(reader[0].ToString());
                     }
                 }
-                objConnection.Close();
             }
             return intRecord;
         }
@@ -82,7 +79,6 @@ namespace IdentityManagement.Data
                     p.Add("@" + param.ParameterName, param.ParameterValue);
                 }
                 success = SqlMapper.Execute(objConnection, spName, p, commandType: CommandType.StoredProcedure);
-                objConnection.Close();
             }
             return success;
         }
@@ -99,7 +95,6 @@ namespace IdentityManagement.Data
                     p.Add("@" + param.ParameterName, param.ParameterValue);
                 }
                 success = SqlMapper.Execute(objConnection, spName, p, commandType: CommandType.StoredProcedure);
-                objConnection.Close();
             }
             return success;
         }
