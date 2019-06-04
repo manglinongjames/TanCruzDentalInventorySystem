@@ -39,6 +39,9 @@ namespace TanCruzDentalInventorySystem.Controllers
 
                 if (oUser != null && new PasswordHasher().VerifyHashedPassword(oUser.Password, loginInfo.Password) == PasswordVerificationResult.Success)
                 {
+                    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                        SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
                     switch (oUser.UserStatus)
                     {
                         case EnumUserStatus.Pending:
@@ -46,8 +49,7 @@ namespace TanCruzDentalInventorySystem.Controllers
                             break;
                         case EnumUserStatus.Active:
                             SignInManager.SignIn(oUser, loginInfo.RememberMe, false);
-                            break;
-//                            return Redirect(returnUrl ?? "/");
+                            return Redirect(returnUrl ?? "/");
 
                         case EnumUserStatus.Banned:
                             ModelState.AddModelError(string.Empty, "Error: User account has been banned.");
