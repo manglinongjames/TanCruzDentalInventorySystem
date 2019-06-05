@@ -115,9 +115,10 @@ namespace TanCruzDentalInventorySystem.Controllers
 
                 var result = await UserManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)
-                {
                     return RedirectToAction("ListUsers", "Account");
-                }
+                else
+                    foreach (var error in result.Errors)
+                        ModelState.AddModelError(string.Empty, error);
             }
 
             return View(registerViewModel);
