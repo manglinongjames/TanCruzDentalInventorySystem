@@ -89,5 +89,38 @@ namespace TanCruzDentalInventorySystem.Controllers
 
             return View(users);
         }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = registerViewModel.UserName,
+                    FirstName = registerViewModel.FirstName,
+                    MiddleName = registerViewModel.MiddleName,
+                    LastName = registerViewModel.LastName,
+                    Email = registerViewModel.Email,
+                    UserStatus = EnumUserStatus.Active
+                };
+
+                var result = await UserManager.CreateAsync(user, registerViewModel.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers", "Account");
+                }
+            }
+
+            return View(registerViewModel);
+        }
     }
 }

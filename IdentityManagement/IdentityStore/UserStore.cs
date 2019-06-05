@@ -19,8 +19,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    user.Id = Guid.NewGuid().ToString();
-                    UserController.NewUser(user);
+                    UserController.CreateNewUser(user);
                 });
             }
             throw new ArgumentNullException("user");

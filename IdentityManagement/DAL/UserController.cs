@@ -6,15 +6,17 @@ namespace IdentityManagement.DAL
 {
     public static class UserController
     {
-        public static int NewUser(ApplicationUser objUser)
+        public static int CreateNewUser(ApplicationUser objUser)
         {
             List<ParameterInfo> parameters = new List<ParameterInfo>();
-            parameters.Add(new ParameterInfo() { ParameterName = "Id", ParameterValue = objUser.Id });
             parameters.Add(new ParameterInfo() { ParameterName = "UserName", ParameterValue = objUser.UserName });
+            parameters.Add(new ParameterInfo() { ParameterName = "FirstName", ParameterValue = objUser.FirstName });
+            parameters.Add(new ParameterInfo() { ParameterName = "LastName", ParameterValue = objUser.LastName });
+            parameters.Add(new ParameterInfo() { ParameterName = "MiddleName", ParameterValue = objUser.MiddleName });
             parameters.Add(new ParameterInfo() { ParameterName = "Email", ParameterValue = objUser.Email });
             parameters.Add(new ParameterInfo() { ParameterName = "Password", ParameterValue = objUser.Password });
-            parameters.Add(new ParameterInfo() { ParameterName = "Status", ParameterValue = objUser.UserStatus });
-            int success = SqlHelper.ExecuteQuery("NewUser", parameters);
+            parameters.Add(new ParameterInfo() { ParameterName = "UserStatus", ParameterValue = objUser.UserStatus });
+            int success = SqlHelper.ExecuteQuery("CreateNewUser", parameters);
             return success;
         }
 
