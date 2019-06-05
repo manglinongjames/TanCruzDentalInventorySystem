@@ -30,6 +30,18 @@ namespace IdentityManagement.Mvc
         }
     }
 
+    public class ApplicationRoleManager : RoleManager<ApplicationRole>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore)
+            : base(roleStore)
+        {
+        }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            return new ApplicationRoleManager(new ApplicationRoleStore());
+        }
+    }
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TanCruzDentalInventorySystem.ViewModel.EditUserViewModel>
+﻿@model IEnumerable<TanCruzDentalInventorySystem.ViewModel.UserViewModel>
 @{ ViewBag.Title = "ListUsers"; }
 
 <h2>Users</h2>
@@ -39,10 +39,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) |
-                @Html.ActionLink("Groups", "UserGroups", new { id = item.UserName }) |
-                @Html.ActionLink("Effective Permissions", "UserPermissions", new { id = item.UserName }) |||
-                @Html.ActionLink("Delete", "Delete", new { id = item.UserName })
+                @Html.ActionLink("Edit", "Edit", new { useraName = item.UserName }) |
+                @Html.ActionLink("Groups", "UserGroups", new { useraName = item.UserName }) |
+                @Html.ActionLink("Effective Permissions", "UserPermissions", new { useraName = item.UserName }) |||
+                @Html.ActionLink("Delete", "Delete", new { useraName = item.UserName })
             </td>
         </tr>
     }

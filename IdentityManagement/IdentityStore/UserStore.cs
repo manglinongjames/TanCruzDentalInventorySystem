@@ -3,6 +3,7 @@ using IdentityManagement.Entities;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityManagement.IdentityStore
@@ -10,8 +11,20 @@ namespace IdentityManagement.IdentityStore
     public class UserStore :
         IUserStore<ApplicationUser>,
         IUserRoleStore<ApplicationUser>,
-        IUserPasswordStore<ApplicationUser>
+        IUserPasswordStore<ApplicationUser>,
+        IQueryableUserStore<ApplicationUser>
     {
+
+        #region IQueryableUserStore
+        public IQueryable<ApplicationUser> Users
+        {
+            get
+            {
+                return UserController.GetUsers().AsQueryable();
+            }
+        }
+        #endregion
+
         #region IUserStore
         public Task CreateAsync(ApplicationUser user)
         {
@@ -97,7 +110,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    UserRoleController.NewUserRole(user.Id, roleName);
+                    RoleController.NewUserRole(user.Id, roleName);
                 });
             }
             else
@@ -112,7 +125,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    UserRoleController.DeleteUserRole(user.Id, roleName);
+                    RoleController.DeleteUserRole(user.Id, roleName);
                 });
             }
             else
@@ -127,7 +140,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    IList<string> roles = UserRoleController.GetUserRoles(user.Id);
+                    IList<string> roles = RoleController.GetUserRoles(user.Id);
                     return roles;
                 });
             }
@@ -143,7 +156,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    IList<string> roles = UserRoleController.GetUserRoles(user.Id);
+                    IList<string> roles = RoleController.GetUserRoles(user.Id);
                     foreach (string role in roles)
                     {
                         if (role.ToUpper() == roleName.ToUpper())

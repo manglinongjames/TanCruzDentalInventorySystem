@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using IdentityManagement.DAL;
 using IdentityManagement.Entities;
 using IdentityManagement.Mvc;
 using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -85,8 +82,7 @@ namespace TanCruzDentalInventorySystem.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult ListUsers()
         {
-            var users = Mapper.Map<List<EditUserViewModel>>(UserController.GetUsers());
-
+            var users = Mapper.Map<List<UserViewModel>>(UserManager.Users);
             return View(users);
         }
 
@@ -112,6 +108,7 @@ namespace TanCruzDentalInventorySystem.Controllers
                     Email = registerViewModel.Email,
                     UserStatus = EnumUserStatus.Active
                 };
+
 
                 var result = await UserManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)

@@ -82,14 +82,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\UserController.cs" />
-    <Compile Include="DAL\UserRoleController.cs" />
+    <Compile Include="DAL\RoleController.cs" />
     <Compile Include="Data\ParameterInfo.cs" />
     <Compile Include="Data\SqlHelper.cs" />
+    <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\LoginInfo.cs" />
     <Compile Include="Entities\RoleInfo.cs" />
-    <Compile Include="Entities\UserInfo.cs" />
-    <Compile Include="Entities\UserRoleInfo.cs" />
+    <Compile Include="IdentityStore\RoleStore.cs" />
     <Compile Include="IdentityStore\UserStore.cs" />
     <Compile Include="Mvc\BaseIdentityController.cs" />
     <Compile Include="Mvc\IdentityConfig.cs" />

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using IdentityManagement.Entities;
-using IdentityManagement.Utilities;
+﻿using IdentityManagement.Utilities;
 using System.ComponentModel.DataAnnotations;
 
 namespace TanCruzDentalInventorySystem.ViewModel
@@ -20,10 +18,9 @@ namespace TanCruzDentalInventorySystem.ViewModel
         public bool RememberMe { get; set; }
     }
 
-    public class EditUserViewModel
+    public class UserViewModel
     {
-        public EditUserViewModel() { }
-
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }

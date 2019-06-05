@@ -8,6 +8,7 @@ namespace IdentityManagement.Mvc
     {
         protected ApplicationSignInManager _signInManager;
         protected ApplicationUserManager _userManager;
+        protected ApplicationRoleManager _roleManager;
 
         protected BaseIdentityController() { }
 
@@ -33,6 +34,18 @@ namespace IdentityManagement.Mvc
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        protected ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
             }
         }
     }
