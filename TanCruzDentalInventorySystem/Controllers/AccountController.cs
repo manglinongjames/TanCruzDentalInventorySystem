@@ -1,9 +1,12 @@
-﻿using IdentityManagement.Entities;
+﻿using AutoMapper;
+using IdentityManagement.DAL;
+using IdentityManagement.Entities;
 using IdentityManagement.Mvc;
 using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
@@ -31,11 +34,11 @@ namespace TanCruzDentalInventorySystem.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginCredentialsViewModel loginInfo, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel loginInfo, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser oUser = await SignInManager.UserManager.FindAsync(loginInfo.UserName, loginInfo.Password)
+                ApplicationUser oUser = await SignInManager.UserManager.FindAsync(loginInfo.UserName, loginInfo.Password);
 
                 if (oUser != null)
                 {
@@ -57,9 +60,7 @@ namespace TanCruzDentalInventorySystem.Controllers
                     }
                 }
                 else
-                {
                     ModelState.AddModelError(string.Empty, "Invalid login details.");
-                }
             }
             return View(loginInfo);
 
@@ -79,6 +80,14 @@ namespace TanCruzDentalInventorySystem.Controllers
         {
             SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ListUsers()
+        {
+            var users = Mapper.Map<List<EditUserViewModel>>(UserController.GetUsers());
+
+            return View(users);
         }
     }
 }

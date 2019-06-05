@@ -16,7 +16,7 @@ namespace TanCruzDentalInventorySystem.BusinessService
             _unitOfWork = unitOfWork;
         }
 
-        public UserProfileViewModel Login(LoginCredentialsViewModel loginInfo)
+        public UserProfileViewModel Login(LoginViewModel loginInfo)
         {
             _accountRepository.UnitOfWork = _unitOfWork;
             // null;

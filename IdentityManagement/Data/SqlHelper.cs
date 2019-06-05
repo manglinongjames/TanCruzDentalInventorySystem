@@ -34,10 +34,11 @@ namespace IdentityManagement.Data
             {
                 objConnection.Open();
                 DynamicParameters p = new DynamicParameters();
-                foreach (var param in parameters)
-                {
-                    p.Add("@" + param.ParameterName, param.ParameterValue);
-                }
+                if (parameters != null)
+                    foreach (var param in parameters)
+                    {
+                        p.Add("@" + param.ParameterName, param.ParameterValue);
+                    }
 
                 recordList = SqlMapper.Query<T>(objConnection, spName, p, commandType: CommandType.StoredProcedure).ToList();
             }

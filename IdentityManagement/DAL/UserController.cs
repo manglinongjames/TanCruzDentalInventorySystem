@@ -34,6 +34,12 @@ namespace IdentityManagement.DAL
             return oUser;
         }
 
+        public static List<ApplicationUser> GetUsers()
+        {
+            List<ApplicationUser> oUserList = SqlHelper.GetRecords<ApplicationUser>("GetUsers", null);
+            return oUserList;
+        }
+
         public static ApplicationUser GetUserByUsername(string userName)
         {
             List<ParameterInfo> parameters = new List<ParameterInfo>();

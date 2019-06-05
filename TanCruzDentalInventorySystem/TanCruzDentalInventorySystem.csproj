@@ -206,7 +206,7 @@
     <Compile Include="Repository\DataServiceInterface\IUnitOfWork.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\LoginCredentialsViewModel.cs" />
+    <Compile Include="ViewModel\AccountViewModels.cs" />
     <Compile Include="ViewModel\UserGroupViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
   </ItemGroup>
@@ -295,6 +295,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Item\ItemHome.cshtml" />
+    <Content Include="Views\Account\ListUsers.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

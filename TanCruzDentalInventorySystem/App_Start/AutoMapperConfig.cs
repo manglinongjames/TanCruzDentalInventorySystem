@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityManagement.Entities;
 using TanCruzDentalInventorySystem.Models;
 using TanCruzDentalInventorySystem.ViewModel;
 
@@ -10,7 +11,8 @@ namespace TanCruzDentalInventorySystem
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<UserProfile, UserProfileViewModel>().ReverseMap();
+                //cfg.CreateMap<UserProfile, UserProfileViewModel>().ReverseMap();
+                cfg.CreateMap<ApplicationUser, EditUserViewModel>().ReverseMap();
             });
         }
     }
