@@ -40,6 +40,8 @@ namespace IdentityManagement.Mvc
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
 

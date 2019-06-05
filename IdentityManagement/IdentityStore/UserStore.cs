@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace IdentityManagement.IdentityStore
 {
-    public class UserStore : IUserStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
+    public class UserStore :
+        IUserStore<ApplicationUser>,
+        IUserRoleStore<ApplicationUser>,
+        IUserPasswordStore<ApplicationUser>
     {
         #region IUserStore
         public Task CreateAsync(ApplicationUser user)
@@ -160,5 +163,22 @@ namespace IdentityManagement.IdentityStore
         }
         #endregion
 
+        #region IUserPasswordStore
+        public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash)
+        {
+            user.Password = passwordHash;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetPasswordHashAsync(ApplicationUser user)
+        {
+            return Task.FromResult(user.Password);
+        }
+
+        public Task<bool> HasPasswordAsync(ApplicationUser user)
+        {
+            return Task.FromResult(string.IsNullOrEmpty(user.Password));
+        }
+        #endregion
     }
 }

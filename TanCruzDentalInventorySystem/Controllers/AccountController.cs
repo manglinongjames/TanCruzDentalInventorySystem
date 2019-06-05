@@ -35,20 +35,17 @@ namespace TanCruzDentalInventorySystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser oUser = await SignInManager.UserManager.FindByNameAsync(loginInfo.UserName);
+                ApplicationUser oUser = await SignInManager.UserManager.FindAsync(loginInfo.UserName, loginInfo.Password)
 
-                if (oUser != null && new PasswordHasher().VerifyHashedPassword(oUser.Password, loginInfo.Password) == PasswordVerificationResult.Success)
+                if (oUser != null)
                 {
-                    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                        SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-
                     switch (oUser.UserStatus)
                     {
                         case EnumUserStatus.Pending:
                             ModelState.AddModelError(string.Empty, "Error: User account has not been verified.");
                             break;
                         case EnumUserStatus.Active:
-                            SignInManager.SignIn(oUser, loginInfo.RememberMe, false);
+                            await SignInManager.SignInAsync(oUser, loginInfo.RememberMe, false);
                             return Redirect(returnUrl ?? "/");
 
                         case EnumUserStatus.Banned:
