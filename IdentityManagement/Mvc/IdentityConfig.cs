@@ -43,6 +43,21 @@ namespace IdentityManagement.Mvc
         }
     }
 
+
+    public class ApplicationGroupManager : ApplicationGroupManager<ApplicationGroup, string>
+    {
+        public ApplicationGroupManager(IGroupStore<ApplicationGroup, string> groupStore)
+            : base(groupStore)
+        {
+        }
+
+        public static ApplicationGroupManager Create(IdentityFactoryOptions<ApplicationGroupManager> options, IOwinContext context)
+        {
+            return new ApplicationGroupManager(new ApplicationGroupStore());
+        }
+    }
+
+
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)

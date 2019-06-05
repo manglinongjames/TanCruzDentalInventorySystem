@@ -1,5 +1,5 @@
-﻿using IdentityManagement.DAL;
-using IdentityManagement.Entities;
+﻿using IdentityManagement.Entities;
+using IdentityManagement.Repositories;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace IdentityManagement.IdentityStore
         {
             get
             {
-                return UserController.GetUsers().AsQueryable();
+                return UserRepository.GetUsers().AsQueryable();
             }
         }
         #endregion
@@ -32,7 +32,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    UserController.CreateNewUser(user);
+                    UserRepository.CreateNewUser(user);
                 });
             }
             throw new ArgumentNullException("user");
@@ -44,13 +44,11 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    UserController.DeleteUser(user);
+                    UserRepository.DeleteUser(user);
                 });
             }
             throw new ArgumentNullException("user");
         }
-
-        
 
         public void Dispose()
         {
@@ -63,7 +61,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    return UserController.GetUser(userId);
+                    return UserRepository.GetUser(userId);
                 });
             }
             throw new ArgumentNullException("userId");
@@ -75,7 +73,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    return UserController.GetUserByUsername(userName);
+                    return UserRepository.GetUserByUsername(userName);
                 });
             }
             throw new ArgumentNullException("userName");
@@ -85,7 +83,7 @@ namespace IdentityManagement.IdentityStore
         {
             if (!string.IsNullOrEmpty(userName))
             {
-                return UserController.GetUserByUsername(userName);
+                return UserRepository.GetUserByUsername(userName);
             }
             throw new ArgumentNullException("userName");
         }
@@ -96,7 +94,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    return UserController.UpdateUser(user);
+                    return UserRepository.UpdateUser(user);
                 });
             }
             throw new ArgumentNullException("userName");
@@ -110,7 +108,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    RoleController.NewUserRole(user.Id, roleName);
+                    RoleRepository.NewUserRole(user.Id, roleName);
                 });
             }
             else
@@ -125,7 +123,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    RoleController.DeleteUserRole(user.Id, roleName);
+                    RoleRepository.DeleteUserRole(user.Id, roleName);
                 });
             }
             else
@@ -140,7 +138,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    IList<string> roles = RoleController.GetUserRoles(user.Id);
+                    IList<string> roles = RoleRepository.GetUserRoles(user.Id);
                     return roles;
                 });
             }
@@ -156,7 +154,7 @@ namespace IdentityManagement.IdentityStore
             {
                 return Task.Factory.StartNew(() =>
                 {
-                    IList<string> roles = RoleController.GetUserRoles(user.Id);
+                    IList<string> roles = RoleRepository.GetUserRoles(user.Id);
                     foreach (string role in roles)
                     {
                         if (role.ToUpper() == roleName.ToUpper())

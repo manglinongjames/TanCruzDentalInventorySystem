@@ -17,6 +17,7 @@ namespace TanCruzDentalInventorySystem
         {
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+            app.CreatePerOwinContext<ApplicationGroupManager>(ApplicationGroupManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

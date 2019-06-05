@@ -81,15 +81,18 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\UserController.cs" />
-    <Compile Include="DAL\RoleController.cs" />
+    <Compile Include="Repositories\GroupRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Data\ParameterInfo.cs" />
     <Compile Include="Data\SqlHelper.cs" />
     <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Entities\LoginInfo.cs" />
-    <Compile Include="Entities\RoleInfo.cs" />
-    <Compile Include="IdentityStore\RoleStore.cs" />
+    <Compile Include="Entities\ApplicationGroup.cs" />
+    <Compile Include="IdentityStore\ApplicationGroupStore.cs" />
+    <Compile Include="IdentityStore\ApplicationGroupManager.cs" />
+    <Compile Include="IdentityStore\IGroupStore.cs" />
+    <Compile Include="IdentityStore\ApplicationRoleStore.cs" />
     <Compile Include="IdentityStore\UserStore.cs" />
     <Compile Include="Mvc\BaseIdentityController.cs" />
     <Compile Include="Mvc\IdentityConfig.cs" />
