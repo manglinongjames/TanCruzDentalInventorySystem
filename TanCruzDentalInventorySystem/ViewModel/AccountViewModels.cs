@@ -75,12 +75,29 @@ namespace TanCruzDentalInventorySystem.ViewModel
 
 	}
 
-	public class SelectGroupViewModel
+	public class GroupViewModel
 	{
 		public string GroupId { get; set; }
 		public string GroupName { get; set; }
 		public string GroupDescription { get; set; }
-		public bool IsSelected { get; set; } = false;
+	}
 
+	public class SelectGroupViewModel : GroupViewModel
+	{
+		public bool IsSelected { get; set; } = false;
+	}
+
+	public class UserPermissionsViewModel
+	{
+		public string UserId { get; set; }
+		public string UserName { get; set; }
+		public IEnumerable<RoleViewModel> Roles { get; set; }
+	}
+
+	public class RoleViewModel
+	{
+		public string RoleId { get; set; }
+		public string RoleName { get; set; }
+		public string RoleDescription { get; set; }
 	}
 }

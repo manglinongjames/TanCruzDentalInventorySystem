@@ -298,6 +298,7 @@
     <Content Include="Views\Account\ListUsers.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\UserGroups.cshtml" />
+    <Content Include="Views\Account\UserPermissions.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

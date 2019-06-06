@@ -122,8 +122,30 @@ namespace TanCruzDentalInventorySystem.Controllers
 		public async Task<ActionResult> UserGroups(string userId)
 		{
 			var user = await UserManager.FindByIdAsync(userId);
-			var appGroups = GroupManager.Groups.ToList();
-			var userGroups = GroupManager.GetUserGroups(userId).ToList();
+			var appGroups = GroupManager.Groups;
+			var userGroups = GroupManager.GetUserGroups(userId);
+
+			var mapped = appGroups.Where(group => userGroups.Any(userGroup => userGroup.GroupId == group.GroupId))
+				.Select(g => new SelectGroupViewModel()
+				{
+					GroupId = g.GroupId,
+					GroupName = g.GroupName,
+					GroupDescription = g.GroupDescription,
+					IsSelected = true
+				});
+
+			var notMapped = appGroups.Where(group => !userGroups.Any(userGroup => userGroup.GroupId == group.GroupId))
+				.Select(g => new SelectGroupViewModel()
+				{
+					GroupId = g.GroupId,
+					GroupName = g.GroupName,
+					GroupDescription = g.GroupDescription,
+					IsSelected = false
+				});
+
+			var allGroups = new List<SelectGroupViewModel>();
+			allGroups.AddRange(mapped);
+			allGroups.AddRange(notMapped);
 
 			var selectGroup = new SelectUserGroupsViewModel()
 			{
@@ -131,22 +153,20 @@ namespace TanCruzDentalInventorySystem.Controllers
 				UserName = user.UserName,
 				LastName = user.LastName,
 				FirstName = user.FirstName,
-				Groups = new List<SelectGroupViewModel>()
+				Groups = allGroups.OrderBy(g => g.GroupName).ToList()
 			};
 
-			foreach (var group in appGroups)
-			{
-				var mappedGroup = new SelectGroupViewModel()
-				{
-					GroupId = group.GroupId,
-					GroupName = group.GroupName,
-					GroupDescription = group.GroupDescription,
-					IsSelected = userGroups.Exists(g => g.GroupId == group.GroupId)
-				};
-				selectGroup.Groups.Add(mappedGroup);
-			}
-			//UserManager.
-			//IList<string> Groups = await UserManager.GetGroupsAsync(user.UserId);
+			//foreach (var group in appGroups)
+			//{
+			//	var mappedGroup = new SelectGroupViewModel()
+			//	{
+			//		GroupId = group.GroupId,
+			//		GroupName = group.GroupName,
+			//		GroupDescription = group.GroupDescription,
+			//		IsSelected = userGroups.Exists(g => g.GroupId == group.GroupId)
+			//	};
+			//	selectGroup.Groups.Add(mappedGroup);
+			//}
 			return View(selectGroup);
 		}
 
@@ -156,7 +176,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var userGroups = GroupManager.GetUserGroups(selGroups.UserId).ToList();
+				var userGroups = GroupManager.GetUserGroups(selGroups.UserId);
 
 				var deletedGroupsIds = selGroups.Groups.Where(group => userGroups.Any(userGroup => userGroup.GroupId == group.GroupId && !group.IsSelected))
 					.Select(group => group.GroupId);
@@ -169,6 +189,28 @@ namespace TanCruzDentalInventorySystem.Controllers
 				return RedirectToAction("ListUsers");
 			}
 			return View();
+		}
+
+		public async Task<ActionResult> UserPermissions(string userId)
+		{
+			var user = await UserManager.FindByIdAsync(userId);
+			var userRoles = await UserManager.GetRolesAsync(userId);
+			var appRoles = RoleManager.Roles;
+
+			var userPermissions = new UserPermissionsViewModel()
+			{
+				UserId = user.UserId,
+				UserName = user.UserName,
+				Roles = appRoles.Where(role => userRoles.Any(userRole => userRole == role.Name))
+					.Select(r => new RoleViewModel
+					{
+						RoleId = r.RoleId,
+						RoleName = r.RoleName,
+						RoleDescription = r.RoleDescription
+					}).OrderBy(r => r.RoleName)
+			};
+
+			return View(userPermissions);
 		}
 	}
 }
