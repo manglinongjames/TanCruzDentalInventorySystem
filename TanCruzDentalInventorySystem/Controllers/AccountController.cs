@@ -80,7 +80,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 			return RedirectToAction("Login", "Account");
 		}
 
-		public ActionResult ListUsers()
+		public ActionResult UserList()
 		{
 			var users = Mapper.Map<List<UserViewModel>>(UserManager.Users);
 			return View(users);
@@ -110,7 +110,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 				var result = await UserManager.CreateAsync(user, registerViewModel.Password);
 				if (result.Succeeded)
-					return RedirectToAction("ListUsers", "Account");
+					return RedirectToAction("UserList");
 				else
 					foreach (var error in result.Errors)
 						ModelState.AddModelError(string.Empty, error);
@@ -186,7 +186,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				await GroupManager.RemoveUserFromGroupAsync(selGroups.UserId, deletedGroupsIds);
 				await GroupManager.AddUserToGroup(selGroups.UserId, newGroupsIds);
 
-				return RedirectToAction("ListUsers");
+				return RedirectToAction("UserList");
 			}
 			return View();
 		}
@@ -211,6 +211,36 @@ namespace TanCruzDentalInventorySystem.Controllers
 			};
 
 			return View(userPermissions);
+		}
+
+		public ActionResult GroupList()
+		{
+			var appGroups = GroupManager.Groups;
+
+			var groupViewModel = appGroups
+				.Select(group => new GroupViewModel
+				{
+					GroupId = group.GroupId,
+					GroupName = group.GroupName,
+					GroupDescription = group.GroupDescription
+				}).OrderBy(g => g.GroupName);
+
+			return View(groupViewModel);
+		}
+
+		public ActionResult RoleList()
+		{
+			var appRoles = RoleManager.Roles;
+
+			var roleViewModel = appRoles
+				.Select(role => new RoleViewModel
+				{
+					RoleId = role.RoleId,
+					RoleName = role.RoleName,
+					RoleDescription = role.RoleDescription
+				}).OrderBy(r => r.RoleName);
+
+			return View(roleViewModel);
 		}
 	}
 }

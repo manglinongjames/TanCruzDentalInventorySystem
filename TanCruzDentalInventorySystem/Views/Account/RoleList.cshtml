@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TanCruzDentalInventorySystem.ViewModel.RoleViewModel>
+@{
+	ViewBag.Title = "Role List";
+}
+
+<h2>Roles</h2>
+
+<p>
+	@Html.ActionLink("Create New Role", "CreateRole")
+</p>
+<table class="table">
+	<tr>
+		<th>
+			Role Name
+		</th>
+		<th>
+			Role Description
+		</th>
+		<th></th>
+	</tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.RoleName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.RoleDescription)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id = item.RoleName }) |
+				@Html.ActionLink("Delete", "Delete", new { id = item.RoleName })
+			</td>
+		</tr>
+	}
+
+</table>

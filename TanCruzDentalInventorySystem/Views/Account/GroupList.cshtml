@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TanCruzDentalInventorySystem.ViewModel.GroupViewModel>
+@{
+	ViewBag.Title = "Group List";
+}
+
+<h2>Groups</h2>
+
+<p>
+	@Html.ActionLink("Create New Group", "CreateGroup")
+</p>
+<table class="table">
+	<tr>
+		<th>
+			Group Name
+		</th>
+		<th>
+			Group Description
+		</th>
+		<th></th>
+	</tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.GroupName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.GroupDescription)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { groupId = item.GroupId }) |
+				@Html.ActionLink("Permissions", "GroupRoles", new { groupId = item.GroupId }) |
+				@Html.ActionLink("Delete", "Delete", new { groupId = item.GroupId })
+			</td>
+		</tr>
+	}
+</table>

@@ -295,10 +295,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Item\ItemHome.cshtml" />
-    <Content Include="Views\Account\ListUsers.cshtml" />
+    <Content Include="Views\Account\UserList.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\UserGroups.cshtml" />
     <Content Include="Views\Account\UserPermissions.cshtml" />
+    <Content Include="Views\Account\GroupList.cshtml" />
+    <Content Include="Views\Account\RoleList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
