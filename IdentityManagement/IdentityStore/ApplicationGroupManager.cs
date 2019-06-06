@@ -1,68 +1,94 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using IdentityManagement.Entities;
+using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityManagement.IdentityStore
 {
-    public class ApplicationGroupManager<TGroup, TKey> :
-        IDisposable
-    {
-        private readonly IGroupStore<TGroup, string> _groupStore;
+	public class ApplicationGroupManager<TGroup, TKey> :
+		IDisposable
+	{
+		private readonly IGroupStore<ApplicationGroup, TKey> _groupStore;
 
-        public ApplicationGroupManager(IGroupStore<TGroup, string> store)
-        {
-            _groupStore = store;
-        }
+		public ApplicationGroupManager(IGroupStore<ApplicationGroup, TKey> store)
+		{
+			_groupStore = store;
+		}
 
-        public IIdentityValidator<TGroup> RoleValidator { get; set; }
+		public virtual IQueryable<ApplicationGroup> Groups
+		{
+			get
+			{
+				return _groupStore.Groups;
+			}
+		}
 
-        public virtual IQueryable<TGroup> Groups
-        {
-            get
-            {
-                return _groupStore.Groups.AsQueryable();
-            }
-        }
+		public virtual Task<IdentityResult> CreateAsync(TGroup group)
+		{
+			return null;
+		}
 
-        public virtual Task<IdentityResult> CreateAsync(TGroup group)
-        {
-            return null;
-        }
+		public virtual Task<IdentityResult> DeleteAsync(TGroup group)
+		{
+			return null;
+		}
 
-        public virtual Task<IdentityResult> DeleteAsync(TGroup group)
-        {
-            return null;
-        }
-        
-        public virtual Task<TGroup> FindByIdAsync(TKey groupId)
-        {
-            return null;
-        }
-        
-        public virtual Task<TGroup> FindByNameAsync(string groupName)
-        {
-            return null;
-        }
-        
-        public virtual Task<bool> GroupExistsAsync(string roleName)
-        {
-            return null;
-        }
+		public virtual Task<TGroup> FindByIdAsync(TKey groupId)
+		{
+			return null;
+		}
 
-        public virtual Task<IdentityResult> UpdateAsync(TGroup group)
-        {
-            return null;
-        }
+		public virtual Task<TGroup> FindByNameAsync(string groupName)
+		{
+			return null;
+		}
 
-        public void Dispose()
-        {
+		public virtual Task<bool> GroupExistsAsync(string groupName)
+		{
+			return null;
+		}
 
-        }
+		public virtual Task<IdentityResult> UpdateAsync(TGroup group)
+		{
+			return null;
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
+		public IQueryable<ApplicationGroup> GetUserGroups(string userId)
+		{
+			IQueryable<ApplicationGroup> groups = _groupStore.GetUserGroups(userId);
+			return groups;
+		}
 
-        }
-    }
+		public virtual async Task<IdentityResult> RemoveUserFromGroupAsync(string userId, IEnumerable<string> groupIds)
+		{
+			foreach (var groupId in groupIds)
+			{
+				await _groupStore.RemoveUserFromGroupAsync(userId, groupId);
+			}
+
+			return IdentityResult.Success;
+		}
+
+		public virtual async Task<IdentityResult> AddUserToGroup(string userId, IEnumerable<string> groupIds)
+		{
+			foreach (var groupId in groupIds)
+			{
+				await _groupStore.AddUserToGroupAsync(userId, groupId);
+			}
+
+			return IdentityResult.Success;
+		}
+
+		public void Dispose()
+		{
+
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+
+		}
+	}
 }

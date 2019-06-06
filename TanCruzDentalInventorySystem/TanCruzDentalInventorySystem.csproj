@@ -297,6 +297,7 @@
     <Content Include="Views\Item\ItemHome.cshtml" />
     <Content Include="Views\Account\ListUsers.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\UserGroups.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

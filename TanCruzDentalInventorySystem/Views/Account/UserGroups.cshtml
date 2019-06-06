@@ -1,0 +1,70 @@
+﻿@model TanCruzDentalInventorySystem.ViewModel.SelectUserGroupsViewModel
+@{
+	ViewBag.Title = "User Groups";
+}
+
+<h2>Groups for user @Html.DisplayFor(model => model.UserName)</h2>
+<hr />
+
+@using (Html.BeginForm("UserGroups", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
+{
+	@Html.AntiForgeryToken()
+	<div class="form-horizontal">
+		@Html.ValidationSummary(true)
+		<div class="form-group">
+			<div class="col-md-10">
+				@Html.HiddenFor(model => model.UserId)
+			</div>
+		</div>
+		<h4>Select Group Assignments</h4>
+		<br />
+		<hr />
+		<table>
+			<tr>
+				<th>
+					Select
+				</th>
+				<th>
+					Group
+				</th>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Name</td>
+				<td>Description</td>
+			</tr>
+			@for (int i = 0; i <= Model.Groups.Count - 1; i++)
+			{
+				<tr>
+					@Html.HiddenFor(model => model.Groups[i].GroupId)
+					<td class="js-export-checkbox">
+						<div class="form-group">
+							@Html.CheckBoxFor(model => model.Groups[i].IsSelected)
+						</div>
+					</td>
+					<td>
+						<div class="form-group">
+							@Html.DisplayFor(model => model.Groups[i].GroupName)
+						</div>
+					</td>
+					<td>
+						<div class="form-group">
+							@Html.DisplayFor(model => model.Groups[i].GroupDescription)
+						</div>
+					</td>
+					<td>
+				</tr>
+			}
+		</table>
+		<br />
+		<hr />
+		<div class="form-group">
+			<input type="submit" value="Save" class="signinBtn btn btn-lg btn-outline-warning btn-block" />
+		</div>
+	</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "ListUsers")
+</div>
+
