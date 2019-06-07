@@ -34,7 +34,11 @@ namespace IdentityManagement.IdentityStore
 
 		public Task<ApplicationGroup> FindByIdAsync(string groupId)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				var group = GroupRepository.GetGroup(groupId);
+				return group;
+			});
 		}
 
 		public Task<ApplicationGroup> FindByNameAsync(string groupName)
@@ -61,12 +65,39 @@ namespace IdentityManagement.IdentityStore
 			});
 		}
 
+		public Task RemoveRoleFromGroupAsync(string groupId, string roleId)
+		{
+			return Task.Factory.StartNew(() =>
+			{
+				GroupRepository.RemoveRoleFromGroup(groupId, roleId);
+				return;
+			});
+		}
+
 		public Task AddUserToGroupAsync(string userId, string groupId)
 		{
 			return Task.Factory.StartNew(() =>
 			{
 				GroupRepository.AddUserToGroup(userId, groupId);
 				return;
+			});
+		}
+
+		public Task AddRoleToGroupAsync(string groupId, string roleId)
+		{
+			return Task.Factory.StartNew(() =>
+			{
+				GroupRepository.AddRoleToGroup(groupId, roleId);
+				return;
+			});
+		}
+
+		public Task<IQueryable<ApplicationRole>> GetGroupRoles(string groupId)
+		{
+			return Task.Factory.StartNew(() =>
+			{
+				var roles = GroupRepository.GetGroupRoles(groupId).AsQueryable();
+				return roles;
 			});
 		}
 	}

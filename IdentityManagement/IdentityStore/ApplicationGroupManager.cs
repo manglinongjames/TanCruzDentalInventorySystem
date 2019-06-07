@@ -35,9 +35,16 @@ namespace IdentityManagement.IdentityStore
 			return null;
 		}
 
-		public virtual Task<TGroup> FindByIdAsync(TKey groupId)
+		public virtual async Task<ApplicationGroup> FindByIdAsync(TKey groupId)
 		{
-			return null;
+			var group = await _groupStore.FindByIdAsync(groupId);
+			return group;
+		}
+
+		public virtual Task<IQueryable<ApplicationRole>> GetGroupRoles(string groupId)
+		{
+			var roles = _groupStore.GetGroupRoles(groupId);
+			return roles;
 		}
 
 		public virtual Task<TGroup> FindByNameAsync(string groupName)
@@ -71,11 +78,31 @@ namespace IdentityManagement.IdentityStore
 			return IdentityResult.Success;
 		}
 
+		public virtual async Task<IdentityResult> RemoveRoleFromGroupAsync(string groupId, IEnumerable<string> roleIds)
+		{
+			foreach (var roleId in roleIds)
+			{
+				await _groupStore.RemoveRoleFromGroupAsync(groupId, roleId);
+			}
+
+			return IdentityResult.Success;
+		}
+
 		public virtual async Task<IdentityResult> AddUserToGroup(string userId, IEnumerable<string> groupIds)
 		{
 			foreach (var groupId in groupIds)
 			{
 				await _groupStore.AddUserToGroupAsync(userId, groupId);
+			}
+
+			return IdentityResult.Success;
+		}
+
+		public virtual async Task<IdentityResult> AddRoleToGroup(string groupId, IEnumerable<string> roleIds)
+		{
+			foreach (var roleId in roleIds)
+			{
+				await _groupStore.AddRoleToGroupAsync(groupId, roleId);
 			}
 
 			return IdentityResult.Success;

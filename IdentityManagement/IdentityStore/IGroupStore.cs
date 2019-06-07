@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IdentityManagement.Entities;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,9 @@ namespace IdentityManagement.IdentityStore
 		Task UpdateAsync(TGroup group);
 		IQueryable<TGroup> Groups { get; }
 		Task RemoveUserFromGroupAsync(string userId, string groupId);
+		Task RemoveRoleFromGroupAsync(string groupId, string roleId);
 		Task AddUserToGroupAsync(string userId, string groupId);
+		Task AddRoleToGroupAsync(string groupId, string roleId);
+		Task<IQueryable<ApplicationRole>> GetGroupRoles(string groupId);
 	}
 }

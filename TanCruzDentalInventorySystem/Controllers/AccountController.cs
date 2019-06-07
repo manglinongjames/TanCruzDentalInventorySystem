@@ -242,5 +242,66 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 			return View(roleViewModel);
 		}
+
+		public async Task<ActionResult> GroupRoles(string groupId)
+		{
+			var appRoles = RoleManager.Roles;
+			var groupRoles = await GroupManager.GetGroupRoles(groupId);
+			var group = await GroupManager.FindByIdAsync(groupId);
+			
+
+			var mapped = appRoles.Where(role => groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId))
+				.Select(r => new SelectRoleViewModel()
+				{
+					RoleId = r.RoleId,
+					RoleName = r.RoleName,
+					RoleDescription = r.RoleDescription,
+					IsSelected = true
+				});
+
+			var notMapped = appRoles.Where(role => !groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId))
+				.Select(r => new SelectRoleViewModel()
+				{
+					RoleId = r.RoleId,
+					RoleName = r.RoleName,
+					RoleDescription = r.RoleDescription,
+					IsSelected = false
+				});
+
+			var allRoles = new List<SelectRoleViewModel>();
+			allRoles.AddRange(mapped);
+			allRoles.AddRange(notMapped);
+
+			var selectRole = new SelectGroupRolesViewModel()
+			{
+				GroupId = group.GroupId,
+				GroupName = group.GroupName,
+				GroupDescription = group.GroupDescription,
+				Roles = allRoles.OrderBy(r => r.RoleName).ToList()
+			};
+
+			return View(selectRole);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> GroupRoles(SelectGroupRolesViewModel selRoles)
+		{
+			if (ModelState.IsValid)
+			{
+				var groupRoles = await GroupManager.GetGroupRoles(selRoles.GroupId);
+
+				var deletedRolesIds = selRoles.Roles.Where(role => groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId && !role.IsSelected))
+					.Select(role => role.RoleId);
+				var newRolesIds = selRoles.Roles.Where(role => !groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId)).Where(role => role.IsSelected)
+					.Select(role => role.RoleId);
+
+				await GroupManager.RemoveRoleFromGroupAsync(selRoles.GroupId, deletedRolesIds);
+				await GroupManager.AddRoleToGroup(selRoles.GroupId, newRolesIds);
+
+				return RedirectToAction("GroupList");
+			}
+			return View();
+		}
 	}
 }
