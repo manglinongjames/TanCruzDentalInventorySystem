@@ -3,7 +3,7 @@
 	ViewBag.Title = "Group Role Permissions";
 }
 
-<h2>Permissions for Group: [@Html.DisplayFor(model => model.GroupName)]</h2>
+<h2>Permissions for Group: <strong>@Html.DisplayFor(model => model.GroupName)</strong></h2>
 <hr />
 
 @using (Html.BeginForm("GroupRoles", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))

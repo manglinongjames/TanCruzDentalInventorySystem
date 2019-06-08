@@ -3,7 +3,7 @@
 	ViewBag.Title = "User Groups";
 }
 
-<h2>Groups for user: [@Html.DisplayFor(model => model.UserName)]</h2>
+<h2>Groups for user: <strong>@Html.DisplayFor(model => model.UserName)</strong></h2>
 <hr />
 
 @using (Html.BeginForm("UserGroups", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))

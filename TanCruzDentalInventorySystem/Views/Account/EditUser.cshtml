@@ -6,7 +6,7 @@
 @using (Html.BeginForm("EditUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
 	@Html.AntiForgeryToken()
-	<h4>Edit user [@Html.DisplayFor(model => model.UserName)]</h4>
+	<h2>Edit user: <strong>@Html.DisplayFor(model => model.UserName)</strong></h2>
 	<hr />
 	@Html.ValidationSummary()
 	<div class="form-group">

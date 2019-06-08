@@ -23,13 +23,13 @@
 					@Html.ActionLink("Lists", "ItemHome", "Item", new { area = "" }, new { @class = "nav-link" })
 				</li>
 				<li class="nav-item">
-					@Html.ActionLink("Sales", "Index", "Account", new { area = "" }, new { @class = "nav-link" })
+					@Html.ActionLink("Sales", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
 				</li>
 				<li class="nav-item">
-					@Html.ActionLink("Purchases", "Index", "Account", new { area = "" }, new { @class = "nav-link" })
+					@Html.ActionLink("Purchases", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
 				</li>
 				<li class="nav-item">
-					@Html.ActionLink("Reports", "Index", "Account", new { area = "" }, new { @class = "nav-link" })
+					@Html.ActionLink("Reports", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
 				</li>
 				<li class="nav-item dropdown">
 					@Html.ActionLink("Admin", string.Empty, string.Empty, new { area = "" }, new { @id = "navBarMainAdminDD", @class = "nav-link", data_toggle = "dropdown", aria_haspopup = "true", aria_expanded = "false" })
@@ -45,7 +45,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="nav-item dropdown">
-					@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", string.Empty, string.Empty, new { area = "" }, new { @id = "navBarMainAdminDD", @class = "nav-link", data_toggle = "dropdown", aria_haspopup = "true", aria_expanded = "false" })
+					@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", string.Empty, string.Empty, new { area = "" }, new { @class = "nav-link", data_toggle = "dropdown", aria_haspopup = "true", aria_expanded = "false" })
 					<div class="dropdown-menu" aria-labelledby="dropdown05">
 						<a class="dropdown-item" href="~/Account/ChangePassword">Change Password</a>
 						<a class="dropdown-item" href="~/Account/Logout">Log out</a>
