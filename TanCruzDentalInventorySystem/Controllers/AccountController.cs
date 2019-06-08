@@ -74,6 +74,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 			//return Redirect(returnUrl);
 		}
 
+		[AllowAnonymous]
 		public ActionResult Logout()
 		{
 			SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
@@ -326,16 +327,13 @@ namespace TanCruzDentalInventorySystem.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var updatedUser = new ApplicationUser()
-				{
-					UserId = userModel.UserId,
-					UserName = userModel.UserName,
-					LastName = userModel.LastName,
-					FirstName = userModel.FirstName,
-					MiddleName = userModel.MiddleName,
-					Email = userModel.Email,
-					UserStatus = userModel.UserStatus
-				};
+				var updatedUser = await UserManager.FindByIdAsync(userModel.UserId);
+				updatedUser.UserName = userModel.UserName;
+				updatedUser.LastName = userModel.LastName;
+				updatedUser.FirstName = userModel.FirstName;
+				updatedUser.MiddleName = userModel.MiddleName;
+				updatedUser.Email = userModel.Email;
+				updatedUser.UserStatus = userModel.UserStatus;
 
 				var result = await UserManager.UpdateAsync(updatedUser);
 				if (result.Succeeded)
@@ -347,6 +345,50 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 			// If we got this far, something failed, redisplay form
 			return View(userModel);
+		}
+
+		[AllowAnonymous]
+		public ActionResult ChangePassword(string message)
+		{
+			if (!User.Identity.IsAuthenticated)
+				return RedirectToAction("Login");
+
+			ViewBag.StatusMessage = message;
+
+			return View();
+			//ViewBag.StatusMessage =
+			//	message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+			//	: message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+			//	: message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+			//	: message == ManageMessageId.Error ? "An error has occurred."
+			//	: "";
+			//ViewBag.HasLocalPassword = HasPassword();
+			//ViewBag.ReturnUrl = Url.Action("Manage");
+			//return View();
+		}
+
+		[HttpPost]
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+		{
+			if (!User.Identity.IsAuthenticated)
+				return RedirectToAction("Login");
+
+			ViewBag.ReturnUrl = Url.Action("ChangePassword");
+			
+			if (ModelState.IsValid)
+			{
+				IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+				if (result.Succeeded)
+					return RedirectToAction("ChangePassword", new { message = "Your password has been changed." });
+				else
+					foreach (var error in result.Errors)
+						ModelState.AddModelError("", error);
+			}
+			
+			// If we got this far, something failed, redisplay form
+			return View(model);
 		}
 	}
 }

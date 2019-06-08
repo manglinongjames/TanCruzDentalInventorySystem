@@ -59,7 +59,8 @@ namespace IdentityManagement.Repositories
             parameters.Add(new ParameterInfo() { ParameterName = "LastName", ParameterValue = objUser.LastName });
             parameters.Add(new ParameterInfo() { ParameterName = "MiddleName", ParameterValue = objUser.MiddleName });
             parameters.Add(new ParameterInfo() { ParameterName = "Email", ParameterValue = objUser.Email });
-            parameters.Add(new ParameterInfo() { ParameterName = "UserStatus", ParameterValue = objUser.UserStatus });
+			parameters.Add(new ParameterInfo() { ParameterName = "Password", ParameterValue = objUser.Password });
+			parameters.Add(new ParameterInfo() { ParameterName = "UserStatus", ParameterValue = objUser.UserStatus });
 			int success = SqlHelper.ExecuteQuery("UpdateUserProfile", parameters);
             return success;
         }
