@@ -1,0 +1,70 @@
+﻿@model TanCruzDentalInventorySystem.ViewModel.EditUserViewModel
+@{
+	ViewBag.Title = "Edit User";
+}
+
+@using (Html.BeginForm("EditUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+	@Html.AntiForgeryToken()
+	<h4>Edit user [@Html.DisplayFor(model => model.UserName)]</h4>
+	<hr />
+	@Html.ValidationSummary()
+	<div class="form-group">
+		<div class="col-md-10">
+			@Html.HiddenFor(m => m.UserId)
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.UserStatus, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.EnumDropDownListFor(
+			x => x.UserStatus,
+			"Select User Status",
+			new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group col-md-10">
+		<input type="submit" value="Save" class="signinBtn btn btn-lg btn-outline-warning btn-block" />
+	</div>
+
+	<div>
+		@Html.ActionLink("Back to List", "UserList")
+	</div>
+
+}
+

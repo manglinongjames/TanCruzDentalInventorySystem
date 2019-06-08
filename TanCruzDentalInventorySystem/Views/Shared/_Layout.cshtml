@@ -44,12 +44,14 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<div class="te">Hello @User.Identity.GetUserName()</div>
+					@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+				</li>
+				<li>
+					<form class="form-inline my-2 my-md-0">
+						<input class="form-control" type="text" placeholder="Search">
+					</form>
 				</li>
 			</ul>
-			<form class="form-inline my-2 my-md-0">
-				<input class="form-control" type="text" placeholder="Search">
-			</form>
 		</div>
 	</nav>
 	<div class="container body-content">

@@ -52,9 +52,15 @@ namespace IdentityManagement.Repositories
 
         public static int UpdateUser(ApplicationUser objUser)
         {
-            List<ParameterInfo> parameters = new List<ParameterInfo>();
+			List<ParameterInfo> parameters = new List<ParameterInfo>();
+            parameters.Add(new ParameterInfo() { ParameterName = "UserId", ParameterValue = objUser.UserId });
+            parameters.Add(new ParameterInfo() { ParameterName = "UserName", ParameterValue = objUser.UserName });
+            parameters.Add(new ParameterInfo() { ParameterName = "FirstName", ParameterValue = objUser.FirstName });
+            parameters.Add(new ParameterInfo() { ParameterName = "LastName", ParameterValue = objUser.LastName });
+            parameters.Add(new ParameterInfo() { ParameterName = "MiddleName", ParameterValue = objUser.MiddleName });
             parameters.Add(new ParameterInfo() { ParameterName = "Email", ParameterValue = objUser.Email });
-            int success = SqlHelper.ExecuteQuery("UpdateUser", parameters);
+            parameters.Add(new ParameterInfo() { ParameterName = "UserStatus", ParameterValue = objUser.UserStatus });
+			int success = SqlHelper.ExecuteQuery("UpdateUserProfile", parameters);
             return success;
         }
     }

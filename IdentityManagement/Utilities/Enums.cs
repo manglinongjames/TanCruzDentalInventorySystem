@@ -2,10 +2,10 @@
 {
     public enum EnumUserStatus
     {
-        Pending = 0,
+        Pending = 1,
         Active,
         LockedOut,
-        Closed,
+        InActive,
         Banned
     }
 }

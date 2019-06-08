@@ -104,7 +104,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 					MiddleName = registerViewModel.MiddleName,
 					LastName = registerViewModel.LastName,
 					Email = registerViewModel.Email,
-					UserStatus = EnumUserStatus.Active
+					UserStatus = registerViewModel.UserStatus
 				};
 
 
@@ -248,7 +248,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 			var appRoles = RoleManager.Roles;
 			var groupRoles = await GroupManager.GetGroupRoles(groupId);
 			var group = await GroupManager.FindByIdAsync(groupId);
-			
+
 
 			var mapped = appRoles.Where(role => groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId))
 				.Select(r => new SelectRoleViewModel()
@@ -302,6 +302,51 @@ namespace TanCruzDentalInventorySystem.Controllers
 				return RedirectToAction("GroupList");
 			}
 			return View();
+		}
+
+		public async Task<ActionResult> EditUser(string userId)
+		{
+			var user = await UserManager.FindByIdAsync(userId);
+			var editUser = new EditUserViewModel()
+			{
+				UserId = user.UserId,
+				UserName = user.UserName,
+				LastName = user.LastName,
+				FirstName = user.FirstName,
+				MiddleName = user.MiddleName,
+				Email = user.Email,
+				UserStatus = user.UserStatus
+			};
+			return View(editUser);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> EditUser(EditUserViewModel userModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var updatedUser = new ApplicationUser()
+				{
+					UserId = userModel.UserId,
+					UserName = userModel.UserName,
+					LastName = userModel.LastName,
+					FirstName = userModel.FirstName,
+					MiddleName = userModel.MiddleName,
+					Email = userModel.Email,
+					UserStatus = userModel.UserStatus
+				};
+
+				var result = await UserManager.UpdateAsync(updatedUser);
+				if (result.Succeeded)
+					return RedirectToAction("UserList");
+				else
+					foreach (var error in result.Errors)
+						ModelState.AddModelError(string.Empty, error);
+			}
+
+			// If we got this far, something failed, redisplay form
+			return View(userModel);
 		}
 	}
 }

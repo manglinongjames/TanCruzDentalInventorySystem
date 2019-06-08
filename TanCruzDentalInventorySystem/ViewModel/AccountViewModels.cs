@@ -63,6 +63,36 @@ namespace TanCruzDentalInventorySystem.ViewModel
 		[Required]
 		[EmailAddress]
 		public string Email { get; set; }
+
+		[Range(1, int.MaxValue, ErrorMessage = "Select a correct User Status")]
+		public EnumUserStatus UserStatus { get; set; }
+	}
+
+	public class EditUserViewModel
+	{
+		public string UserId { get; set; }
+
+		[Required]
+		[Display(Name = "User name")]
+		public string UserName { get; set; }
+
+		[Required]
+		[Display(Name = "First Name")]
+		public string FirstName { get; set; }
+
+		[Required]
+		[Display(Name = "Last Name")]
+		public string LastName { get; set; }
+
+		[Display(Name = "Middle Name")]
+		public string MiddleName { get; set; }
+
+		[Required]
+		[EmailAddress]
+		public string Email { get; set; }
+
+		[Range(1, int.MaxValue, ErrorMessage = "Select a correct User Status")]
+		public EnumUserStatus UserStatus { get; set; }
 	}
 
 	public class SelectUserGroupsViewModel

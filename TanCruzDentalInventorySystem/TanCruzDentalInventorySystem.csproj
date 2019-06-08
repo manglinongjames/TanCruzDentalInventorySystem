@@ -302,6 +302,7 @@
     <Content Include="Views\Account\GroupList.cshtml" />
     <Content Include="Views\Account\RoleList.cshtml" />
     <Content Include="Views\Account\GroupRoles.cshtml" />
+    <Content Include="Views\Account\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
