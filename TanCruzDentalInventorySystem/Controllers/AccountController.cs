@@ -306,7 +306,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				var newRolesIds = selRoles.Roles.Where(role => !groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId)).Where(role => role.IsSelected)
 					.Select(role => role.RoleId);
 
-				await GroupManager.RemoveRoleFromGroupAsync(selRoles.GroupId, deletedRolesIds);
+				await GroupManager.RemoveRolesFromGroupAsync(selRoles.GroupId, deletedRolesIds);
 				await GroupManager.AddRoleToGroup(selRoles.GroupId, newRolesIds);
 
 				return RedirectToAction("GroupList");
@@ -430,6 +430,69 @@ namespace TanCruzDentalInventorySystem.Controllers
 			}
 
 			return View(groupViewModel);
+		}
+
+		public async Task<ActionResult> EditGroup(string groupId)
+		{
+			if (string.IsNullOrWhiteSpace(groupId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var group = await GroupManager.FindByIdAsync(groupId);
+			var editGroup = new GroupViewModel()
+			{
+				GroupId = group.GroupId,
+				GroupName = group.GroupName,
+				GroupDescription = group.GroupDescription
+			};
+
+			return View(editGroup);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> EditGroup(GroupViewModel groupViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var updatedGroup = await GroupManager.FindByIdAsync(groupViewModel.GroupId);
+				updatedGroup.GroupName = groupViewModel.GroupName;
+				updatedGroup.GroupDescription = groupViewModel.GroupDescription;
+
+				var result = await GroupManager.UpdateAsync(updatedGroup);
+				if (result.Succeeded)
+					return RedirectToAction("GroupList");
+				else
+					foreach (var error in result.Errors)
+						ModelState.AddModelError(string.Empty, error);
+			}
+
+			// If we got this far, something failed, redisplay form
+			return View(groupViewModel);
+		}
+
+		public async Task<ActionResult> DeleteGroup(string groupId)
+		{
+			if (string.IsNullOrWhiteSpace(groupId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var group = await GroupManager.FindByIdAsync(groupId);
+			var editGroup = new GroupViewModel()
+			{
+				GroupId = group.GroupId,
+				GroupName = group.GroupName,
+				GroupDescription = group.GroupDescription
+			};
+
+			return View(editGroup);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> DeleteConfirmed(string groupId)
+		{
+			var deleteGroup = await GroupManager.FindByIdAsync(groupId);
+			await GroupManager.DeleteAsync(deleteGroup);
+			return RedirectToAction("GroupList");
 		}
 	}
 }

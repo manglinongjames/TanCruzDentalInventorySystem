@@ -36,12 +36,13 @@ namespace IdentityManagement.IdentityStore
 			return IdentityResult.Success;
 		}
 
-		public virtual Task<IdentityResult> DeleteAsync(TGroup group)
+		public async virtual Task<IdentityResult> DeleteAsync(ApplicationGroup group)
 		{
-			return null;
+			await _groupStore.DeleteAsync(group);
+			return IdentityResult.Success;
 		}
 
-		public virtual async Task<ApplicationGroup> FindByIdAsync(TKey groupId)
+		public virtual async Task<ApplicationGroup> FindByIdAsync(string groupId)
 		{
 			var group = await _groupStore.FindByIdAsync(groupId);
 			return group;
@@ -64,9 +65,16 @@ namespace IdentityManagement.IdentityStore
 			return null;
 		}
 
-		public virtual Task<IdentityResult> UpdateAsync(TGroup group)
+		public virtual async Task<IdentityResult> UpdateAsync(ApplicationGroup group)
 		{
-			return null;
+			var thisGroup = await _groupStore.FindByIdAsync(group.GroupId);
+			var existingGroup = await _groupStore.FindByNameAsync(group.GroupName);
+			if (existingGroup != null && thisGroup.GroupId != existingGroup.GroupId)
+				return IdentityResult.Failed(new string[] { $"GroupName {group.GroupName} already exists" });
+
+			await _groupStore.UpdateAsync(group);
+
+			return IdentityResult.Success;
 		}
 
 		public IQueryable<ApplicationGroup> GetUserGroups(string userId)
@@ -85,11 +93,11 @@ namespace IdentityManagement.IdentityStore
 			return IdentityResult.Success;
 		}
 
-		public virtual async Task<IdentityResult> RemoveRoleFromGroupAsync(string groupId, IEnumerable<string> roleIds)
+		public virtual async Task<IdentityResult> RemoveRolesFromGroupAsync(string groupId, IEnumerable<string> roleIds)
 		{
 			foreach (var roleId in roleIds)
 			{
-				await _groupStore.RemoveRoleFromGroupAsync(groupId, roleId);
+				await _groupStore.RemoveRolesFromGroupAsync(groupId, roleId);
 			}
 
 			return IdentityResult.Success;

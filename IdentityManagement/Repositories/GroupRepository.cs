@@ -88,5 +88,23 @@ namespace IdentityManagement.Repositories
 			IList<ApplicationRole> oUserGroupList = SqlHelper.GetRecords<ApplicationRole>("GetGroupRoles", parameters);
 			return oUserGroupList;
 		}
+
+		public static int UpdateGroup(ApplicationGroup objGroup)
+		{
+			List<ParameterInfo> parameters = new List<ParameterInfo>();
+			parameters.Add(new ParameterInfo() { ParameterName = "GROUP_ID", ParameterValue = objGroup.GroupId });
+			parameters.Add(new ParameterInfo() { ParameterName = "GROUP_NAME", ParameterValue = objGroup.GroupName });
+			parameters.Add(new ParameterInfo() { ParameterName = "GROUP_DESC", ParameterValue = objGroup.GroupDescription });
+			int success = SqlHelper.ExecuteQuery("UpdateGroup", parameters);
+			return success;
+		}
+
+		public static int DeleteGroup(ApplicationGroup objGroup)
+		{
+			List<ParameterInfo> parameters = new List<ParameterInfo>();
+			parameters.Add(new ParameterInfo() { ParameterName = "GROUP_ID", ParameterValue = objGroup.GroupId });
+			int success = SqlHelper.ExecuteQuery("DeleteGroup", parameters);
+			return success;
+		}
 	}
 }
