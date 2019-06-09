@@ -308,7 +308,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 		public async Task<ActionResult> EditUser(string userId)
 		{
 			var user = await UserManager.FindByIdAsync(userId);
-			var editUser = new EditUserViewModel()
+			var editUser = new UserViewModel()
 			{
 				UserId = user.UserId,
 				UserName = user.UserName,
@@ -323,7 +323,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditUser(EditUserViewModel userModel)
+		public async Task<ActionResult> EditUser(UserViewModel userModel)
 		{
 			if (ModelState.IsValid)
 			{

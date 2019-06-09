@@ -19,17 +19,6 @@ namespace TanCruzDentalInventorySystem.ViewModel
 		public bool RememberMe { get; set; }
 	}
 
-	public class UserViewModel
-	{
-		public string UserId { get; set; }
-		public string UserName { get; set; }
-		public string FirstName { get; set; }
-		public string MiddleName { get; set; }
-		public string LastName { get; set; }
-		public string Email { get; set; }
-		public EnumUserStatus UserStatus { get; set; }
-	}
-
 	public class RegisterViewModel
 	{
 		[Required]
@@ -91,7 +80,7 @@ namespace TanCruzDentalInventorySystem.ViewModel
 		public string ConfirmPassword { get; set; }
 	}
 
-	public class EditUserViewModel
+	public class UserViewModel
 	{
 		public string UserId { get; set; }
 
