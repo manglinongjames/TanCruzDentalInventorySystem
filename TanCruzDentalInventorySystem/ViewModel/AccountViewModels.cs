@@ -33,7 +33,8 @@ namespace TanCruzDentalInventorySystem.ViewModel
 	public class RegisterViewModel
 	{
 		[Required]
-		[Display(Name = "User name")]
+		[Display(Name = "UserName")]
+		[RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed for UserName")]
 		public string UserName { get; set; }
 
 		[Required]
@@ -94,7 +95,7 @@ namespace TanCruzDentalInventorySystem.ViewModel
 		public string UserId { get; set; }
 
 		[Required]
-		[Display(Name = "User name")]
+		[Display(Name = "UserName")]
 		public string UserName { get; set; }
 
 		[Required]
@@ -136,7 +137,13 @@ namespace TanCruzDentalInventorySystem.ViewModel
 	public class GroupViewModel
 	{
 		public string GroupId { get; set; }
+
+		[Required]
+		[Display(Name = "Group Name")]
+		[RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed for Group Name")]
 		public string GroupName { get; set; }
+
+		[Display(Name = "Group Description")]
 		public string GroupDescription { get; set; }
 	}
 
@@ -160,6 +167,10 @@ namespace TanCruzDentalInventorySystem.ViewModel
 	public class RoleViewModel
 	{
 		public string RoleId { get; set; }
+
+		[Required]
+		[Display(Name = "Role Name")]
+		[RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed for Role Name")]
 		public string RoleName { get; set; }
 		public string RoleDescription { get; set; }
 	}

@@ -98,7 +98,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = new ApplicationUser()
+				var newUser = new ApplicationUser()
 				{
 					UserName = registerViewModel.UserName,
 					FirstName = registerViewModel.FirstName,
@@ -109,7 +109,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				};
 
 
-				var result = await UserManager.CreateAsync(user, registerViewModel.Password);
+				var result = await UserManager.CreateAsync(newUser, registerViewModel.Password);
 				if (result.Succeeded)
 					return RedirectToAction("UserList");
 				else
@@ -379,7 +379,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 			
 			if (ModelState.IsValid)
 			{
-				IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+				var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
 				if (result.Succeeded)
 					return RedirectToAction("ChangePassword", new { message = "Your password has been changed." });
 				else
@@ -389,6 +389,35 @@ namespace TanCruzDentalInventorySystem.Controllers
 			
 			// If we got this far, something failed, redisplay form
 			return View(model);
+		}
+
+		public ActionResult CreateGroup()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> CreateGroup(GroupViewModel groupViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var newGroup = new ApplicationGroup()
+				{
+					GroupName = groupViewModel.GroupName,
+					GroupDescription = groupViewModel.GroupDescription
+				};
+
+				var result = await GroupManager.CreateAsync(newGroup);
+				if (result.Succeeded)
+					return RedirectToAction("GroupList");
+				else
+					foreach (var error in result.Errors)
+						ModelState.AddModelError("", error);
+				
+			}
+
+			return View(groupViewModel);
 		}
 	}
 }

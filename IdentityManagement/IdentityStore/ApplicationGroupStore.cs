@@ -19,7 +19,10 @@ namespace IdentityManagement.IdentityStore
 
 		public Task CreateAsync(ApplicationGroup group)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				GroupRepository.CreateNewGroup(group);
+			});
 		}
 
 		public Task DeleteAsync(ApplicationGroup group)
@@ -36,14 +39,18 @@ namespace IdentityManagement.IdentityStore
 		{
 			return Task.Factory.StartNew(() =>
 			{
-				var group = GroupRepository.GetGroup(groupId);
+				var group = GroupRepository.GetGroupById(groupId);
 				return group;
 			});
 		}
 
-		public Task<ApplicationGroup> FindByNameAsync(string groupName)
+		public Task<ApplicationGroup> FindByNameAsync(string groupId)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				var group = GroupRepository.GetGroupByName(groupId);
+				return group;
+			});
 		}
 
 		public Task UpdateAsync(ApplicationGroup group)

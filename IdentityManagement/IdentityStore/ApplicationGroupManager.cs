@@ -25,9 +25,15 @@ namespace IdentityManagement.IdentityStore
 			}
 		}
 
-		public virtual Task<IdentityResult> CreateAsync(TGroup group)
+		public async virtual Task<IdentityResult> CreateAsync(ApplicationGroup group)
 		{
-			return null;
+			var existingGroup = await _groupStore.FindByNameAsync(group.GroupName);
+			if (existingGroup != null)
+				return IdentityResult.Failed(new string[] { $"GroupName {group.GroupName} already exists" });
+
+			await _groupStore.CreateAsync(group);
+
+			return IdentityResult.Success;
 		}
 
 		public virtual Task<IdentityResult> DeleteAsync(TGroup group)
@@ -47,9 +53,10 @@ namespace IdentityManagement.IdentityStore
 			return roles;
 		}
 
-		public virtual Task<TGroup> FindByNameAsync(string groupName)
+		public async virtual Task<ApplicationGroup> FindByNameAsync(string groupName)
 		{
-			return null;
+			var group = await _groupStore.FindByNameAsync(groupName);
+			return group;
 		}
 
 		public virtual Task<bool> GroupExistsAsync(string groupName)

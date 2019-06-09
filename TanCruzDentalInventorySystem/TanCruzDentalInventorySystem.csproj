@@ -304,6 +304,7 @@
     <Content Include="Views\Account\GroupRoles.cshtml" />
     <Content Include="Views\Account\EditUser.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\CreateGroup.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
