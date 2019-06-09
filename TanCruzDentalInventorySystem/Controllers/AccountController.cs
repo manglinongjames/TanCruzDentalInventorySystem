@@ -5,6 +5,7 @@ using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
@@ -122,6 +123,9 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> UserGroups(string userId)
 		{
+			if(string.IsNullOrWhiteSpace(userId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var user = await UserManager.FindByIdAsync(userId);
 			var appGroups = GroupManager.Groups;
 			var userGroups = GroupManager.GetUserGroups(userId);
@@ -194,6 +198,9 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> UserPermissions(string userId)
 		{
+			if (string.IsNullOrWhiteSpace(userId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var user = await UserManager.FindByIdAsync(userId);
 			var userRoles = await UserManager.GetRolesAsync(userId);
 			var appRoles = RoleManager.Roles;
@@ -246,10 +253,12 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> GroupRoles(string groupId)
 		{
+			if (string.IsNullOrWhiteSpace(groupId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var appRoles = RoleManager.Roles;
 			var groupRoles = await GroupManager.GetGroupRoles(groupId);
 			var group = await GroupManager.FindByIdAsync(groupId);
-
 
 			var mapped = appRoles.Where(role => groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId))
 				.Select(r => new SelectRoleViewModel()
@@ -307,6 +316,9 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> EditUser(string userId)
 		{
+			if (string.IsNullOrWhiteSpace(userId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var user = await UserManager.FindByIdAsync(userId);
 			var editUser = new UserViewModel()
 			{
