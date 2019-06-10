@@ -19,7 +19,7 @@ namespace TanCruzDentalInventorySystem
 
             // e.g. container.RegisterType<ITestService, TestService>();
 
-            container.RegisterType<IAccountService, AccountService>();
+            //container.RegisterType<IAccountService, AccountService>();
 
             container.RegisterType<IAccountRepository, AccountRepository>();
 

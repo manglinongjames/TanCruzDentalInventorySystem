@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace IdentityManagement.IdentityStore
 {
-	public class ApplicationGroupManager<TGroup, TKey> :
+	public class ApplicationGroupManager<TGroup> :
 		IDisposable
 	{
-		private readonly IGroupStore<ApplicationGroup, TKey> _groupStore;
+		private readonly IGroupStore<ApplicationGroup> _groupStore;
 
-		public ApplicationGroupManager(IGroupStore<ApplicationGroup, TKey> store)
+		public ApplicationGroupManager(IGroupStore<ApplicationGroup> store)
 		{
 			_groupStore = store;
 		}

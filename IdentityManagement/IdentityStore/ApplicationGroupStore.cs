@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace IdentityManagement.IdentityStore
 {
 	public class ApplicationGroupStore :
-		IGroupStore<ApplicationGroup, string>
+		IGroupStore<ApplicationGroup>
 	{
 		public IQueryable<ApplicationGroup> Groups
 		{

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IdentityManagement.IdentityStore
 {
-	public interface IGroupStore<TGroup, in TKey> : IDisposable
+	public interface IGroupStore<TGroup> : IDisposable
 	{
 		Task CreateAsync(TGroup group);
 		Task DeleteAsync(TGroup group);

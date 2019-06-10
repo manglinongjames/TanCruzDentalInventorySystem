@@ -44,9 +44,9 @@ namespace IdentityManagement.Mvc
 	}
 
 
-	public class ApplicationGroupManager : ApplicationGroupManager<ApplicationGroup, string>
+	public class ApplicationGroupManager : ApplicationGroupManager<ApplicationGroup>
 	{
-		public ApplicationGroupManager(IGroupStore<ApplicationGroup, string> groupStore)
+		public ApplicationGroupManager(IGroupStore<ApplicationGroup> groupStore)
 			: base(groupStore)
 		{
 		}

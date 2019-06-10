@@ -17,7 +17,7 @@
 			@Html.DisplayFor(model => model.GroupName)
 		</dd>
 	</dl>
-	@using (Html.BeginForm("DeleteConfirmed", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+	@using (Html.BeginForm("DeleteGroupConfirmed", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 	{
 		@Html.AntiForgeryToken()
 		<div class="form-group col-md-10">
