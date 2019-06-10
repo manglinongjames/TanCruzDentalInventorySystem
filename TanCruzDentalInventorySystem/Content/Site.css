@@ -17,6 +17,10 @@ textarea {
 
 /* Set the image icon on Navbar*/
 
+.mw-unset {
+    max-width: unset;
+}
+
 .navbar {
     margin-bottom:20px;
 }
@@ -32,5 +36,10 @@ textarea {
 }
 
 .indexItemStatusEditBtn {
-     margin-right:10px;
+     margin-right:2px;
 }
+
+.itemHomeTable td.indexItemStatusEditTd {
+    width: 110px;
+}
+
