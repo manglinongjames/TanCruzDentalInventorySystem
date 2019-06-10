@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using IdentityManagement.Entities;
+﻿using IdentityManagement.Entities;
 using IdentityManagement.Mvc;
 using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
@@ -121,7 +120,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				return RedirectToAction("Login");
 
 			ViewBag.ReturnUrl = Url.Action("ChangePassword");
-			
+
 			if (ModelState.IsValid)
 			{
 				var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
@@ -131,7 +130,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 					foreach (var error in result.Errors)
 						ModelState.AddModelError("", error);
 			}
-			
+
 			// If we got this far, something failed, redisplay form
 			return View(model);
 		}
@@ -218,8 +217,22 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public ActionResult UserList()
 		{
-			var users = Mapper.Map<List<UserViewModel>>(UserManager.Users);
-			return View(users);
+			var usersViewModel = new List<UserViewModel>();
+
+			foreach (ApplicationUser user in UserManager.Users)
+			{
+				usersViewModel.Add(new UserViewModel()
+				{
+					UserId = user.UserId,
+					UserName = user.UserName,
+					LastName = user.LastName,
+					FirstName = user.FirstName,
+					MiddleName = user.MiddleName,
+					Email = user.Email,
+					UserStatus = user.UserStatus
+				});
+			}
+			return View(usersViewModel);
 		}
 
 		public async Task<ActionResult> UserPermissions(string userId)
@@ -272,7 +285,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				else
 					foreach (var error in result.Errors)
 						ModelState.AddModelError("", error);
-				
+
 			}
 
 			return View(groupViewModel);
