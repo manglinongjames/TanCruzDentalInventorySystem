@@ -1,0 +1,105 @@
+﻿<h2>Item Record</h2>
+<hr />
+<div class="row">
+    <div class="col-md order-md">
+        <form class="needs-validation" novalidate="">
+            <h4 class="mb-3">Main Details</h4>
+            <div class="row mb-3">
+                <div class="col-md mb-3">
+                    <label for="txtItemNumber">Item Number</label>
+                    <input type="text" class="form-control" id="txtItemNumber" placeholder="" value="" required="">
+                </div>
+                <div class="col-md mb-3">
+                    <label for="txtItemName">Item Name</label>
+                    <input type="text" class="form-control mw-unset" id="txtItemName" placeholder="Item Name" value="" required="">
+                    <div class="invalid-feedback">
+                        Valid item name is required.
+                    </div>
+                </div>
+                <div class="col-md mb-3">
+                    <label for="txtItemType">Item Type</label>
+                    <select class="custom-select d-block w-100" id="txtItemType" required="">
+                        <option value="">Choose...</option>
+                        <option>Item Type 1</option>
+                    </select>
+                </div>
+                <div class="col-md mb-3">
+                    <div class="pt-4 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="chkInactive">
+                        <label class="custom-control-label" for="chkInactive">Inactive</label>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mb-3">Sales Details</h4>
+            <div class="row mb-3">
+                <div class="col-md-3 mb-3 ">
+                    <label for="txtItemSalesDesc">Sales Description</label>
+                    <input type="text" class="form-control" id="txtItemSalesDesc" placeholder="" value="" required="">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="ddItemPrice">Default Item Price</label>
+                    <select class="custom-select d-block w-100" id="ddItemPrice" required="">
+                        <option value="">Choose...</option>
+                        <option>Add Item Price</option>
+                        <option>Item Price 1</option>
+                        <option>Item Price 2</option>
+                        <option>Item Price 3</option>
+                        <option>Item Price 4</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="txtItemPrice">Item Price</label>
+                    <div class="input-group">
+                        <input id="txtItemPrice" type="text" class="form-control number" placeholder="" value="12,345.67" disabled>
+                        <div class="input-group-append">
+                            <button id="btnOpenItemPrices" type="submit" class="btn btn-secondary">Item Prices</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mb-3">Purchase Details</h4>
+            <div class="row mb-3">
+                <div class="col-md-3 mb-3 ">
+                    <label for="txtPurchaseDesc">Purchase Description</label>
+                    <input type="text" class="form-control" id="txtItemSalesDesc" placeholder="" value="" required="">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label for="ddItemPrefVendor">Preferred Vendor</label>
+                    <select class="custom-select d-block w-100" id="ddItemPrefVendor" required="">
+                        <option value="">Choose...</option>
+                        <option>Add Item Price</option>
+                        <option>Vendor 1</option>
+                        <option>Vendor 2</option>
+                        <option>Vendor 3</option>
+                        <option>Vendor 4</option>
+                    </select>
+                </div>
+            </div>
+
+            <h4 class="mb-3">Inventory Details</h4>
+            <div class="row mb-3">
+                <div class="col-md-3 mb-3">
+                    <label for="ddUoM">Inventory Unit of Measure</label>
+                    <select class="custom-select d-block w-100" id="ddUoM" required="">
+                        <option value="">Choose...</option>
+                        <option>Add Unit of Measure</option>
+                        <option>Amount</option>
+                        <option>Vendor 2</option>
+                        <option>Vendor 3</option>
+                        <option>Vendor 4</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3 ">
+                    <label for="txtMinAmtReq">Minimum Inventory Required</label>
+                    <input type="text" class="form-control number" id="txtMinAmtReq" placeholder="" value="1000" required="">
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-warning btn-lg btn-block mb-4" type="submit">Save Item</button>
+        </form>
+    </div>
+</div>

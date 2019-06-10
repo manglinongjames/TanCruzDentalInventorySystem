@@ -15,7 +15,7 @@ namespace TanCruzDentalInventorySystem
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 //defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Item", action = "ItemRecord", id = UrlParameter.Optional }
             );
         }
     }

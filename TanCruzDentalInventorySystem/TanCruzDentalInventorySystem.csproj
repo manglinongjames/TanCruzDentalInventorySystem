@@ -307,6 +307,7 @@
     <Content Include="Views\Account\CreateGroup.cshtml" />
     <Content Include="Views\Account\EditGroup.cshtml" />
     <Content Include="Views\Account\DeleteGroup.cshtml" />
+    <Content Include="Views\Item\ItemRecord.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -4,5 +4,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>From Controller: Item, Action ItemHome</h2>
-Bakero!
+<h3>Item List</h3>
+<hr />
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <form class="p-2">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Item">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-warning">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="itemHomeTable table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Inactive</th>
+                <th>Action</th>
+                <th>Item Number</th>
+                <th>Item Name</th>
+                <th>Sales Price - List 1</th>
+                <th>Sales Price - List 2</th>
+                <th>Purchase Price</th>
+                <th>In Stock</th>
+                <th>Committed</th>
+                <th>Ordered</th>
+                <th>Preferred Vendor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>No</td>
+                <td class="indexItemStatusEditTd"><a href="#" class="indexItemStatusEditBtn btn-outline-dark btn btn-sm">Edit</a><a href="#" class="indexItemStatusViewBtn btn btn-outline-info btn btn-sm">View</a></td>
+                <td>Item0001</td>
+                <td>Dental Floss</td>
+                <td>1,000</td>
+                <td>1,500</td>
+                <td>900</td>
+                <td>50</td>
+                <td>0</td>
+                <td>100</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>No</td>
+                <td class="indexItemStatusEditTd"><a href="#" class="indexItemStatusEditBtn btn-outline-dark btn btn-sm">Edit</a><a href="#" class="indexItemStatusViewBtn btn btn-outline-info btn btn-sm">View</a></td>
+                <td>Item0002</td>
+                <td>Toothbrush</td>
+                <td>1,000</td>
+                <td>1,500</td>
+                <td>900</td>
+                <td>50</td>
+                <td>0</td>
+                <td>100</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>No</td>
+                <td class="indexItemStatusEditTd"><a href="#" class="indexItemStatusEditBtn btn-outline-dark btn btn-sm">Edit</a><a href="#" class="indexItemStatusViewBtn btn btn-outline-info btn btn-sm">View</a></td>
+                <td>Item0003</td>
+                <td>Braces</td>
+                <td>1,000</td>
+                <td>1,500</td>
+                <td>900</td>
+                <td>50</td>
+                <td>0</td>
+                <td>100</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
