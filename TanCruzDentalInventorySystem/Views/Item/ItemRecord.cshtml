@@ -65,6 +65,7 @@
                     <label for="txtPurchaseDesc">Purchase Description</label>
                     <input type="text" class="form-control" id="txtItemSalesDesc" placeholder="" value="" required="">
                 </div>
+
                 <div class="col-md-3 mb-3">
                     <label for="ddItemPrefVendor">Preferred Vendor</label>
                     <select class="custom-select d-block w-100" id="ddItemPrefVendor" required="">
@@ -78,7 +79,24 @@
                 </div>
             </div>
 
-
+            <h4 class="mb-3">Inventory Details</h4>
+            <div class="row mb-3">
+                <div class="col-md-3 mb-3">
+                    <label for="ddUoM">Inventory Unit of Measure</label>
+                    <select class="custom-select d-block w-100" id="ddUoM" required="">
+                        <option value="">Choose...</option>
+                        <option>Add Unit of Measure</option>
+                        <option>Amount</option>
+                        <option>Vendor 2</option>
+                        <option>Vendor 3</option>
+                        <option>Vendor 4</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3 ">
+                    <label for="txtMinAmtReq">Minimum Inventory Required</label>
+                    <input type="text" class="form-control" id="txtMinAmtReq" placeholder="" value="1000" required="">
+                </div>
+            </div>
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
