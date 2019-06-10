@@ -37,6 +37,7 @@
 			{
 				<tr>
 					@Html.HiddenFor(model => model.Roles[i].RoleId)
+					@Html.HiddenFor(model => model.Roles[i].RoleName)
 					<td class="js-export-checkbox">
 						<div class="form-group">
 							@Html.CheckBoxFor(model => model.Roles[i].IsSelected)

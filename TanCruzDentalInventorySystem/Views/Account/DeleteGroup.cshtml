@@ -1,0 +1,31 @@
+﻿@model TanCruzDentalInventorySystem.ViewModel.GroupViewModel
+@{
+	ViewBag.Title = "Delete Group";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<h3>Are you sure you want to delete this?</h3>
+<h6>All users associated to this Group will be removed from this Group.</h6>
+<div>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.GroupName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.GroupName)
+		</dd>
+	</dl>
+	@using (Html.BeginForm("DeleteConfirmed", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+	{
+		@Html.AntiForgeryToken()
+		<div class="form-group col-md-10">
+			@Html.HiddenFor(m => m.GroupId)
+			<input type="submit" value="Delete @Html.DisplayFor(model => model.GroupName)" class="btn btn-lg btn-outline-warning btn-block">
+		</div>
+		<div class="form-group col-md-10">
+			@Html.ActionLink("Back to List", "GroupList")
+		</div>
+	}
+</div>

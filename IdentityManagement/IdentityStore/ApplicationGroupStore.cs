@@ -19,12 +19,18 @@ namespace IdentityManagement.IdentityStore
 
 		public Task CreateAsync(ApplicationGroup group)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				GroupRepository.CreateNewGroup(group);
+			});
 		}
 
 		public Task DeleteAsync(ApplicationGroup group)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				GroupRepository.DeleteGroup(group);
+			});
 		}
 
 		public void Dispose()
@@ -36,19 +42,26 @@ namespace IdentityManagement.IdentityStore
 		{
 			return Task.Factory.StartNew(() =>
 			{
-				var group = GroupRepository.GetGroup(groupId);
+				var group = GroupRepository.GetGroupById(groupId);
 				return group;
 			});
 		}
 
-		public Task<ApplicationGroup> FindByNameAsync(string groupName)
+		public Task<ApplicationGroup> FindByNameAsync(string groupId)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				var group = GroupRepository.GetGroupByName(groupId);
+				return group;
+			});
 		}
 
 		public Task UpdateAsync(ApplicationGroup group)
 		{
-			throw new NotImplementedException();
+			return Task.Factory.StartNew(() =>
+			{
+				return GroupRepository.UpdateGroup(group);
+			});
 		}
 
 		public IQueryable<ApplicationGroup> GetUserGroups(string userId)
@@ -65,7 +78,7 @@ namespace IdentityManagement.IdentityStore
 			});
 		}
 
-		public Task RemoveRoleFromGroupAsync(string groupId, string roleId)
+		public Task RemoveRolesFromGroupAsync(string groupId, string roleId)
 		{
 			return Task.Factory.StartNew(() =>
 			{

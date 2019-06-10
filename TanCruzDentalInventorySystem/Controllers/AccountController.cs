@@ -5,6 +5,7 @@ using IdentityManagement.Utilities;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TanCruzDentalInventorySystem.BusinessService.BusinessServiceInterface;
@@ -98,7 +99,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = new ApplicationUser()
+				var newUser = new ApplicationUser()
 				{
 					UserName = registerViewModel.UserName,
 					FirstName = registerViewModel.FirstName,
@@ -109,7 +110,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				};
 
 
-				var result = await UserManager.CreateAsync(user, registerViewModel.Password);
+				var result = await UserManager.CreateAsync(newUser, registerViewModel.Password);
 				if (result.Succeeded)
 					return RedirectToAction("UserList");
 				else
@@ -122,6 +123,9 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> UserGroups(string userId)
 		{
+			if(string.IsNullOrWhiteSpace(userId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var user = await UserManager.FindByIdAsync(userId);
 			var appGroups = GroupManager.Groups;
 			var userGroups = GroupManager.GetUserGroups(userId);
@@ -194,6 +198,9 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> UserPermissions(string userId)
 		{
+			if (string.IsNullOrWhiteSpace(userId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var user = await UserManager.FindByIdAsync(userId);
 			var userRoles = await UserManager.GetRolesAsync(userId);
 			var appRoles = RoleManager.Roles;
@@ -246,10 +253,12 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> GroupRoles(string groupId)
 		{
+			if (string.IsNullOrWhiteSpace(groupId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var appRoles = RoleManager.Roles;
 			var groupRoles = await GroupManager.GetGroupRoles(groupId);
 			var group = await GroupManager.FindByIdAsync(groupId);
-
 
 			var mapped = appRoles.Where(role => groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId))
 				.Select(r => new SelectRoleViewModel()
@@ -297,7 +306,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 				var newRolesIds = selRoles.Roles.Where(role => !groupRoles.Any(groupRole => groupRole.RoleId == role.RoleId)).Where(role => role.IsSelected)
 					.Select(role => role.RoleId);
 
-				await GroupManager.RemoveRoleFromGroupAsync(selRoles.GroupId, deletedRolesIds);
+				await GroupManager.RemoveRolesFromGroupAsync(selRoles.GroupId, deletedRolesIds);
 				await GroupManager.AddRoleToGroup(selRoles.GroupId, newRolesIds);
 
 				return RedirectToAction("GroupList");
@@ -307,8 +316,11 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		public async Task<ActionResult> EditUser(string userId)
 		{
+			if (string.IsNullOrWhiteSpace(userId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
 			var user = await UserManager.FindByIdAsync(userId);
-			var editUser = new EditUserViewModel()
+			var editUser = new UserViewModel()
 			{
 				UserId = user.UserId,
 				UserName = user.UserName,
@@ -323,7 +335,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditUser(EditUserViewModel userModel)
+		public async Task<ActionResult> EditUser(UserViewModel userModel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -379,7 +391,7 @@ namespace TanCruzDentalInventorySystem.Controllers
 			
 			if (ModelState.IsValid)
 			{
-				IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+				var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
 				if (result.Succeeded)
 					return RedirectToAction("ChangePassword", new { message = "Your password has been changed." });
 				else
@@ -389,6 +401,98 @@ namespace TanCruzDentalInventorySystem.Controllers
 			
 			// If we got this far, something failed, redisplay form
 			return View(model);
+		}
+
+		public ActionResult CreateGroup()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> CreateGroup(GroupViewModel groupViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var newGroup = new ApplicationGroup()
+				{
+					GroupName = groupViewModel.GroupName,
+					GroupDescription = groupViewModel.GroupDescription
+				};
+
+				var result = await GroupManager.CreateAsync(newGroup);
+				if (result.Succeeded)
+					return RedirectToAction("GroupList");
+				else
+					foreach (var error in result.Errors)
+						ModelState.AddModelError("", error);
+				
+			}
+
+			return View(groupViewModel);
+		}
+
+		public async Task<ActionResult> EditGroup(string groupId)
+		{
+			if (string.IsNullOrWhiteSpace(groupId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var group = await GroupManager.FindByIdAsync(groupId);
+			var editGroup = new GroupViewModel()
+			{
+				GroupId = group.GroupId,
+				GroupName = group.GroupName,
+				GroupDescription = group.GroupDescription
+			};
+
+			return View(editGroup);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> EditGroup(GroupViewModel groupViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var updatedGroup = await GroupManager.FindByIdAsync(groupViewModel.GroupId);
+				updatedGroup.GroupName = groupViewModel.GroupName;
+				updatedGroup.GroupDescription = groupViewModel.GroupDescription;
+
+				var result = await GroupManager.UpdateAsync(updatedGroup);
+				if (result.Succeeded)
+					return RedirectToAction("GroupList");
+				else
+					foreach (var error in result.Errors)
+						ModelState.AddModelError(string.Empty, error);
+			}
+
+			// If we got this far, something failed, redisplay form
+			return View(groupViewModel);
+		}
+
+		public async Task<ActionResult> DeleteGroup(string groupId)
+		{
+			if (string.IsNullOrWhiteSpace(groupId))
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var group = await GroupManager.FindByIdAsync(groupId);
+			var editGroup = new GroupViewModel()
+			{
+				GroupId = group.GroupId,
+				GroupName = group.GroupName,
+				GroupDescription = group.GroupDescription
+			};
+
+			return View(editGroup);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> DeleteConfirmed(string groupId)
+		{
+			var deleteGroup = await GroupManager.FindByIdAsync(groupId);
+			await GroupManager.DeleteAsync(deleteGroup);
+			return RedirectToAction("GroupList");
 		}
 	}
 }

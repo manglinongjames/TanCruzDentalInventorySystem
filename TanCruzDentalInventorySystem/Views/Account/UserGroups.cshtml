@@ -37,6 +37,7 @@
 			{
 				<tr>
 					@Html.HiddenFor(model => model.Groups[i].GroupId)
+					@Html.HiddenFor(model => model.Groups[i].GroupName)
 					<td class="js-export-checkbox">
 						<div class="form-group">
 							@Html.CheckBoxFor(model => model.Groups[i].IsSelected)
@@ -67,4 +68,3 @@
 <div>
 	@Html.ActionLink("Back to List", "UserList")
 </div>
-

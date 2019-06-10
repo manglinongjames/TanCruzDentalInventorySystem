@@ -28,9 +28,9 @@
 				@Html.DisplayFor(modelItem => item.GroupDescription)
 			</td>
 			<td>
-				@Html.ActionLink("Edit", "Edit", new { groupId = item.GroupId }) |
+				@Html.ActionLink("Edit", "EditGroup", new { groupId = item.GroupId }) |
 				@Html.ActionLink("Permissions", "GroupRoles", new { groupId = item.GroupId }) |
-				@Html.ActionLink("Delete", "Delete", new { groupId = item.GroupId })
+				@Html.ActionLink("Delete", "DeleteGroup", new { groupId = item.GroupId })
 			</td>
 		</tr>
 	}
