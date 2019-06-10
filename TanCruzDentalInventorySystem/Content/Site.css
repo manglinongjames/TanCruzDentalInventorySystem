@@ -1,11 +1,6 @@
 ﻿body {
     padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    font-family: Candara;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -13,6 +8,21 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+    input.number {
+        font-family: 'Microsoft Sans Serif';
+    }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+
+.btn-warning {
+    color: white;
 }
 
 /* Set the image icon on Navbar*/
