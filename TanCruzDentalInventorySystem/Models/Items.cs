@@ -5,6 +5,9 @@ using System.Web;
 
 namespace TanCruzDentalInventorySystem.Models
 {
+    /// <summary>
+    /// Item
+    /// </summary>
 	public class Item
 	{
 		public string ItemId { get; set; }
