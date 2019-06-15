@@ -19,9 +19,9 @@ namespace TanCruzDentalInventorySystem
 
             // e.g. container.RegisterType<ITestService, TestService>();
 
-            //container.RegisterType<IAccountService, AccountService>();
+            container.RegisterType<IItemService, ItemService>();
 
-            container.RegisterType<IAccountRepository, AccountRepository>();
+            container.RegisterType<IItemRepository, ItemRepository>();
 
             container.RegisterType<IUnitOfWork, UnitOfWork>();
 
